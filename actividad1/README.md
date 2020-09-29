@@ -28,11 +28,11 @@ Vamos a configurar las Máquinas Virtuales de la siguiente manera:
 
 * En el servidor VNC instalaremos `TightVNC -> Custom -> Server`. Esto es el servicio.
 
-![](imagen1.png)
+![](imagen1.PNG)
 
 * Vamos a revisar la configuración del cortafuegos del servidor VNC Windows para permitir VNC. Por defecto, tiene activado el acceso tanto de redes públicas como privadas.
 
-![img2](./imagen2.png)
+![img2](./imagen2.PNG)
 
 ## 1.2 Ir a una máquina con GNU/Linux
 Ejecutaremos el comando `nmap -Pn 172.19.14.11`, desde la máquina real GNU/Linux para comprobar que los servicios son visibles desde fuera de la máquina VNC-SERVER. Deben verse los puertos 580X, 590X, etc.
@@ -42,7 +42,7 @@ Ejecutaremos el comando `nmap -Pn 172.19.14.11`, desde la máquina real GNU/Linu
 # 2 Windows: Master VNC
 En el cliente Windows vamos a instalar `TightVNC -> Custom -> Viewer`.
 
-![](imagen4.png)
+![](imagen4.PNG)
 
 Usaremos TightVNC Viewer. Esto es el cliente VNC.\
 Para esta práctica usaremos conexiones SIN cifrar.
@@ -52,7 +52,7 @@ Para verificar que se han establecido las conexiones remotas:
 
 * Conectar desde el Windows Master hacia el Windows Slave.
 
-![](imagen5.png)
+![](imagen5.PNG)
 
 * Conectar desde GNU/Linux Master hacia el Windows Slave.
 
@@ -60,4 +60,4 @@ Para verificar que se han establecido las conexiones remotas:
 
 * Ir al servidor VNC y usar el comando `netstat -n` para ver las conexiones VNC con el cliente.
 
-![](imagen7.png)
+![](imagen7.PNG)
