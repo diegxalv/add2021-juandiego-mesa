@@ -32,7 +32,7 @@ Vamos a configurar las Máquinas Virtuales de la siguiente manera:
 
 * Vamos a revisar la configuración del cortafuegos del servidor VNC Windows para permitir VNC. Por defecto, tiene activado el acceso tanto de redes públicas como privadas.
 
-![](imagen2.png)
+![img2](./imagen2.png)
 
 ## 1.2 Ir a una máquina con GNU/Linux
 Ejecutaremos el comando `nmap -Pn 172.19.14.11`, desde la máquina real GNU/Linux para comprobar que los servicios son visibles desde fuera de la máquina VNC-SERVER. Deben verse los puertos 580X, 590X, etc.
