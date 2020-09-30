@@ -28,11 +28,11 @@ A continuación, vamos a descargar `TightVNC`. Esta es una herramienta libre dis
 
 * En el servidor VNC instalaremos `TightVNC -> Custom -> Server`. Esto es el servicio.
 
-![](./imagenes/imagen1.PNG)
+![](./images/imagen1.PNG)
 
 * Vamos a revisar la configuración del cortafuegos del servidor VNC Windows para permitir VNC. Por defecto, tiene activado el acceso tanto de redes públicas como privadas.
 
-![img2](./imagenes/imagen2.PNG)
+![img2](./images/imagen2.PNG)
 
 ## 1.2 Ir a una máquina con GNU/Linux
 * Ejecutaremos el comando `nmap -Pn 172.19.14.11`, desde la máquina real GNU/Linux para comprobar que los servicios son visibles desde fuera de la máquina VNC-SERVER. Deben verse los puertos 580X, 590X, etc.
@@ -42,7 +42,7 @@ A continuación, vamos a descargar `TightVNC`. Esta es una herramienta libre dis
 # 2 Windows: Master VNC
 * En el cliente Windows vamos a instalar `TightVNC -> Custom -> Viewer`.
 
-![](./imagenes/imagen4.PNG)
+![](./images/imagen4.PNG)
 
 Usaremos TightVNC Viewer. Esto es el cliente VNC.\
 Para esta práctica usaremos conexiones SIN cifrar.
@@ -52,7 +52,7 @@ Para verificar que se han establecido las conexiones remotas:
 
 * Haremos una conexión desde el Windows Master hacia el Windows Slave.
 
-![](./imagenes/imagen5.PNG)
+![](./images/imagen5.PNG)
 
 * Haremos una segunda conexión desde GNU/Linux Master hacia el Windows Slave.
 
@@ -60,7 +60,7 @@ Para verificar que se han establecido las conexiones remotas:
 
 * Vamos al servidor VNC y dentro de una consola, usaremos el comando `netstat -n` para ver las conexiones VNC con el cliente.
 
-![](./imagenes/imagen7.PNG)
+![](./images/imagen7.PNG)
 
 # 3. openSUSE: Slave VNC
 Vamos a configurar las Máquinas Virtuales openSUSE de la siguiente manera:
