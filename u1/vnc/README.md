@@ -1,4 +1,4 @@
-# TightVNC en Windows y openSUSE
+# TightVNC en Windows
 
 # 1. Windows: Slave VNC
 
