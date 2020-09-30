@@ -21,7 +21,7 @@ Vamos a configurar las Máquinas Virtuales de la siguiente manera:
     · IP: 172.19.14.12
     · Netmask: 255.255.0.0
     · Gateway: 172.19.0.1
-    · Servidor DNS 1.1.1.1
+    · Servidor DNS 1.1.1.1 
 ```
 
 A continuación, vamos a descargar `TightVNC`. Esta es una herramienta libre disponible para Windows.
