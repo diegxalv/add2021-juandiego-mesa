@@ -39,7 +39,7 @@ Comprobaremos los cambios ejecutando los siguientes comandos:
 * `ping client14w (con IP de casa)`
 
 ![](./images/7.PNG)
-*`lsblk`
+* `lsblk`
 
 ![](./images/8.PNG)
 * `blkid`
@@ -71,8 +71,8 @@ Configuraremos el cliente1 GNU/Linux con los siguientes valores:
 
 ## 1.3 Cliente Windows
 Vamos a instalar el software cliente SSH en Windows. Para este ejemplo usaremos PuTTY.
-Configurar el cliente2 Windows con los siguientes valores:
+Configurar el cliente 2 de Windows con los siguientes valores:
 * SO Windows
 * Nombre de equipo: `client14w`
-* Añadir en C:\Windows\System32\drivers\etc\hosts los equipos server14g y client14g.
+* Añadiremos en `C:\Windows\System32\drivers\etc\hosts` los equipos `server14g` y `client14g`.
 * Comprobar haciendo ping a ambos equipos.
