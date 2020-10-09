@@ -112,6 +112,7 @@ Desde el propio servidor, verificar que el servicio está en ejecución.
 Ir al cliente client14g.
 * `ping server14g`, comprobar la conectividad con el servidor.
 ![](./images/22.PNG)
+
 * `nmap -Pn server14g`, comprobar los puertos abiertos en el servidor (SSH debe estar open). Debe mostrarnos que el puerto 22 está abierto. Debe aparecer una línea como "22/tcp open ssh". Si esto falla, debemos comprobar en el servidor la configuración del cortafuegos.
 ![](./images/23.PNG)
 
@@ -119,10 +120,13 @@ Vamos a comprobar el funcionamiento de la conexión SSH desde cada cliente usand
 
 * Desde el cliente GNU/Linux nos conectamos mediante `ssh alvarez1@server14g`. Capturar imagen del intercambio de claves que se produce en el primer proceso de conexión SSH.
 ![](./images/24.PNG)
+
 * A partir de ahora cuando nos conectamos sólo nos pide la contraseña:
 ![](./images/25.PNG)
+
 * Comprobar contenido del fichero `$HOME/.ssh/known_hosts` en el equipo cliente. OJO el prompt nos indica en qué equipo estamos.
 ![](./images/26.PNG)
+
 ¿Te suena la clave que aparece? Es la clave de identificación de la máquina del servidor.
 * Una vez llegados a este punto deben de funcionar correctamente las conexiones SSH desde el cliente. Comprobarlo.
 ![](./images/27.PNG)
@@ -132,6 +136,7 @@ Desde el cliente Windows nos conectamos usando PuTTY
 * Capturar imagen del intercambio de claves que se produce en el primer proceso de conexión SSH.
 * Guardar la identificación del servidor.
 ![](./images/28.PNG)
+
 ¿Te suena la clave que aparece? Es la clave de identificación de la máquina del servidor.\
 Una vez llegados a este punto deben de funcionar correctamente las conexiones SSH desde el cliente. Comprobarlo.\
 La siguiente vez que volvamos a usar PuTTY ya no debe aparecer el mensaje de advertencia porque hemos memorizado la identificación del servidor SSH. Comprobarlo.
@@ -142,6 +147,7 @@ La siguiente vez que volvamos a usar PuTTY ya no debe aparecer el mensaje de adv
 
 * Los ficheros `ssh_host*key` y `ssh_host*key.pub`, son ficheros de clave pública/privada que identifican a nuestro servidor frente a nuestros clientes. Confirmar que existen el en `/etc/ssh`,:
 ![](./images/30.PNG)
+
 * Modificar el fichero de configuración SSH (/etc/ssh/sshd_config) para dejar una única línea: HostKey /etc/ssh/ssh_host_rsa_key. Comentar el resto de líneas con configuración HostKey. Este parámetro define los ficheros de clave publica/privada que van a identificar a nuestro servidor. Con este cambio decimos que sólo se van a utilizar las claves del tipo RSA.
 ![](./images/31.PNG)
 
@@ -151,8 +157,10 @@ Vamos a cambiar o volver a generar nuevas claves públicas/privadas que identifi
 * Ir al servidor.
 * Como usuario root ejecutamos: `ssh-keygen -t rsa -f /etc/ssh/ssh_host_rsa_key`. ¡OJO! No poner password al certificado.
 ![](./images/32.PNG)
+
 * Reiniciar el servicio SSH: `systemctl restart sshd`.
 ![](./images/33.PNG)
+
 * Comprobar que el servicio está en ejecución correctamente: `systemctl status sshd`.
 ![](./images/34.PNG)
 
