@@ -110,36 +110,45 @@ Desde el propio servidor, verificar que el servicio está en ejecución.
 
 ## 2.2 Primera conexión SSH desde cliente GNU/Linux
 Ir al cliente client14g.
-
 * `ping server14g`, comprobar la conectividad con el servidor.
+
 ![](./images/22.PNG)
 
 * Con `nmap -Pn server14g`, comprobaremos los puertos abiertos en el servidor (SSH debe estar open). Debe mostrarnos que el puerto 22 está abierto. Si esto falla, debemos comprobar en el servidor la configuración del cortafuegos.
+
 ![](./images/23.PNG)
 
 Vamos a comprobar el funcionamiento de la conexión SSH desde cada cliente usando el usuario `alvarez1`.
 
 * Desde el cliente GNU/Linux nos conectamos mediante `ssh alvarez1@server14g`. Capturar imagen del intercambio de claves que se produce en el primer proceso de conexión SSH.
+
 ![](./images/24.PNG)
 
 * A partir de ahora cuando nos conectamos sólo nos pide la contraseña:
+
 ![](./images/25.PNG)
 
-* Comprobar contenido del fichero `$HOME/.ssh/known_hosts` en el equipo cliente. OJO el prompt nos indica en qué equipo estamos.
+* Comprobaremos el contenido del fichero `$HOME/.ssh/known_hosts` en el equipo cliente.
+
 ![](./images/26.PNG)
 
 ¿Te suena la clave que aparece? Es la clave de identificación de la máquina del servidor.
-* Una vez llegados a este punto deben de funcionar correctamente las conexiones SSH desde el cliente. Comprobarlo.
+* Una vez llegados a este punto deben de funcionar correctamente las conexiones SSH desde el cliente.
+
 ![](./images/27.PNG)
 
+
 ## 2.3 Primera conexión SSH desde cliente Windows
-Desde el cliente Windows nos conectamos usando PuTTY
+Desde el cliente Windows nos conectaremos usando PuTTY
 * Capturaremos una imagen del intercambio de claves que se produce en el primer proceso de conexión SSH.
+
 ![](./images/28.PNG)
 
-¿Te suena la clave que aparece? Es la clave de identificación de la máquina del servidor.\
-Una vez llegados a este punto deben de funcionar correctamente las conexiones SSH desde el cliente. Comprobarlo.\
-La siguiente vez que volvamos a usar PuTTY ya no debe aparecer el mensaje de advertencia porque hemos memorizado la identificación del servidor SSH. Comprobarlo.
+¿Te suena la clave que aparece? Es la clave de identificación de la máquina del servidor.
+
+Una vez llegados a este punto deben de funcionar correctamente las conexiones SSH desde el cliente.
+
+La siguiente vez que volvamos a usar PuTTY ya no debe aparecer el mensaje de advertencia porque hemos memorizado la identificación del servidor SSH.\
 ![](./images/29.PNG)
 
 # 3. Cambiamos la identidad del servidor
