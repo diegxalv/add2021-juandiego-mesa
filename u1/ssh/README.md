@@ -133,8 +133,7 @@ Vamos a comprobar el funcionamiento de la conexión SSH desde cada cliente usand
 
 ## 2.3 Primera conexión SSH desde cliente Windows
 Desde el cliente Windows nos conectamos usando PuTTY
-* Capturar imagen del intercambio de claves que se produce en el primer proceso de conexión SSH.
-* Guardar la identificación del servidor.
+* Capturaremos una imagen del intercambio de claves que se produce en el primer proceso de conexión SSH.
 ![](./images/28.PNG)
 
 ¿Te suena la clave que aparece? Es la clave de identificación de la máquina del servidor.\
@@ -158,7 +157,8 @@ Vamos a cambiar o volver a generar nuevas claves públicas/privadas que identifi
 * Como usuario root ejecutamos: `ssh-keygen -t rsa -f /etc/ssh/ssh_host_rsa_key`. ¡OJO! No poner password al certificado.
 ![](./images/32.PNG)
 
-* Reiniciar el servicio SSH: `systemctl restart sshd`.
+* Reiniciaremos el servicio SSH: `systemctl restart sshd`.
+
 ![](./images/33.PNG)
 
 * Comprobar que el servicio está en ejecución correctamente: `systemctl status sshd`.
