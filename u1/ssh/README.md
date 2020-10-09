@@ -237,12 +237,42 @@ Ejemplo para copiar la clave pública del usuario actual al usuario remoto en la
 
 * Instalaremos en el servidor una aplicación de entorno gráfico (APP1) que no esté en los clientes. Por ejemplo `Geany`. Si estuviera en el cliente entonces buscar otra aplicación o desinstalarla en el cliente.
 
+![](./images/42.PNG)
+
+
 * Modificar el servidor SSH para permitir la ejecución de aplicaciones gráficas, desde los clientes. Consultar fichero de configuración `/etc/ssh/sshd_config` (Opción X11Forwarding yes)
+
+![](./images/43.PNG)
 * Reiniciar el servicio SSH para que se lean los cambios de configuración.
+
+![](./images/44.PNG)
 
 Ahora vamos a `client14g`.
 
 * `zypper se APP1`,comprobar que no está instalado el programa APP1.
 Vamos a comprobar desde clientXXg, que funciona APP1(del servidor).
-ssh -X primer-apellido-alumno1@serverXXg, nos conectamos de forma remota al servidor, y ahora ejecutamos APP1 de forma remota.
-¡OJO! El parámetro es -X en mayúsculas, no minúsculas.
+
+![](./images/45.PNG)
+
+  * `ssh -X alvarez1@server14g`, nos conectamos de forma remota al servidor, y ahora ejecutamos APP1 de forma remota.
+
+![](./images/46.PNG)
+
+
+# 7. Aplicaciones Windows nativas
+Podemos tener aplicaciones Windows nativas instaladas en ssh-server mediante el emulador WINE.
+* Instalaremos emulador `Wine` en el `server14g`.
+* Ahora podríamos instalar alguna aplicación (APP2) de Windows en el servidor SSH usando el emulador Wine. O podemos usar el Block de Notas que viene con Wine: wine notepad.
+* Comprobar el funcionamiento de APP2 en server14g.
+* Comprobar el funcionamiento de APP2, accediendo desde client14g.
+
+![](./images/48.PNG)
+
+# 8. Restricciones de uso
+Vamos a modificar los usuarios del servidor SSH para añadir algunas restricciones de uso del servicio.
+
+## 8.1 Restricción sobre un usuario
+Vamos a crear una restricción de uso del SSH para un usuario:
+
+* En el servidor tenemos el usuario `alvarez2`. Desde local en el servidor podemos usar sin problemas el usuario.
+* Vamos a modificar SSH de modo que al usar el usuario por SSH desde los clientes tendremos permiso denegado.
