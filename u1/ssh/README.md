@@ -155,9 +155,11 @@ La siguiente vez que volvamos a usar PuTTY ya no debe aparecer el mensaje de adv
 ¿Qué pasaría si cambiamos la identidad del servidor? Esto es, ¿Y si cambiamos las claves del servidor? ¿Qué pasa?
 
 * Los ficheros `ssh_host*key` y `ssh_host*key.pub`, son ficheros de clave pública/privada que identifican a nuestro servidor frente a nuestros clientes. Confirmar que existen el en `/etc/ssh`,:
+
 ![](./images/30.PNG)
 
 * Modificar el fichero de configuración SSH (/etc/ssh/sshd_config) para dejar una única línea: HostKey /etc/ssh/ssh_host_rsa_key. Comentar el resto de líneas con configuración HostKey. Este parámetro define los ficheros de clave publica/privada que van a identificar a nuestro servidor. Con este cambio decimos que sólo se van a utilizar las claves del tipo RSA.
+
 ![](./images/31.PNG)
 
 ## 3.1 Regenerar certificados
@@ -165,6 +167,7 @@ Vamos a cambiar o volver a generar nuevas claves públicas/privadas que identifi
 
 * Ir al servidor.
 * Como usuario root ejecutamos: `ssh-keygen -t rsa -f /etc/ssh/ssh_host_rsa_key`. ¡OJO! No poner password al certificado.
+
 ![](./images/32.PNG)
 
 * Reiniciaremos el servicio SSH: `systemctl restart sshd`.
@@ -172,7 +175,74 @@ Vamos a cambiar o volver a generar nuevas claves públicas/privadas que identifi
 ![](./images/33.PNG)
 
 * Comprobar que el servicio está en ejecución correctamente: `systemctl status sshd`.
+
 ![](./images/34.PNG)
 
 ## 3.2 Comprobamos
 Comprobar qué sucede al volver a conectarnos desde los dos clientes, usando los usuarios alvarez2 y alvarez1. ¿Qué sucede?
+
+
+# 4. Personalización del prompt Bash
+Por ejemplo, podemos añadir las siguientes líneas al fichero de configuración de `alvarez1` en la máquina servidor (Fichero `/home/alvarez1/.bashrc`)
+
+```
+# Se cambia el prompt al conectarse vía SSH
+
+if [ -n "$SSH_CLIENT" ]; then
+   PS1="AccesoRemoto_\e[32m\u@\h:\e[0m \w\a\$ "
+else
+   PS1="\[$(pwd)\]\u@\h:\w>"
+fi
+```
+Además, crearemos el fichero el fichero `/home/alvarez1/.alias`, donde pondremos el siguiente contenido:
+```
+alias c='clear'
+alias g='geany'
+alias p='ping'
+alias v='vdir -cFl'
+alias s='ssh'
+```
+Comprobaremos el funcionamiento de la conexión SSH desde cada cliente.
+
+![](./images/35.PNG)
+
+![](./images/36.PNG)
+# 5. Autenticación mediante claves públicas
+Vamos a la máquina `client14g`. \
+¡OJO! No usar el usuario root.
+* Iniciamos sesión con nuestro usuario "diego" de la máquina `client14g`.
+* `ssh-keygen -t rsa` para generar un nuevo par de claves para el usuario en: \
+`/home/diego/.ssh/id_rsa` \
+`/home/diego/.ssh/id_rsa.pub`
+
+![](./images/37.PNG)
+* Ahora vamos a copiar la clave pública (`id_rsa.pub`), al fichero "authorized_keys" del usuario remoto `alvarez4` que está definido en el servidor.
+
+![](./images/38.PNG)
+
+Lo haremos usando el comando `ssh-copy-id`. \
+Ejemplo para copiar la clave pública del usuario actual al usuario remoto en la máquina remota: \
+`ssh-copy-id alvarez4@server14g`
+
+![](./images/39.PNG)
+
+* Comprobaremos que ahora al acceder remotamente vía SSH desde `client14g` **NO** se pide password, pero desde `client14w`, SI se pide el password.
+
+![](./images/40.PNG)
+
+![](./images/41.PNG)
+
+
+# 6. Uso de SSH como túnel para X
+
+* Instalaremos en el servidor una aplicación de entorno gráfico (APP1) que no esté en los clientes. Por ejemplo `Geany`. Si estuviera en el cliente entonces buscar otra aplicación o desinstalarla en el cliente.
+
+* Modificar el servidor SSH para permitir la ejecución de aplicaciones gráficas, desde los clientes. Consultar fichero de configuración `/etc/ssh/sshd_config` (Opción X11Forwarding yes)
+* Reiniciar el servicio SSH para que se lean los cambios de configuración.
+
+Ahora vamos a `client14g`.
+
+* `zypper se APP1`,comprobar que no está instalado el programa APP1.
+Vamos a comprobar desde clientXXg, que funciona APP1(del servidor).
+ssh -X primer-apellido-alumno1@serverXXg, nos conectamos de forma remota al servidor, y ahora ejecutamos APP1 de forma remota.
+¡OJO! El parámetro es -X en mayúsculas, no minúsculas.
