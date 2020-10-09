@@ -110,10 +110,11 @@ Desde el propio servidor, verificar que el servicio está en ejecución.
 
 ## 2.2 Primera conexión SSH desde cliente GNU/Linux
 Ir al cliente client14g.
+
 * `ping server14g`, comprobar la conectividad con el servidor.
 ![](./images/22.PNG)
 
-* `nmap -Pn server14g`, comprobar los puertos abiertos en el servidor (SSH debe estar open). Debe mostrarnos que el puerto 22 está abierto. Debe aparecer una línea como "22/tcp open ssh". Si esto falla, debemos comprobar en el servidor la configuración del cortafuegos.
+* Con `nmap -Pn server14g`, comprobaremos los puertos abiertos en el servidor (SSH debe estar open). Debe mostrarnos que el puerto 22 está abierto. Si esto falla, debemos comprobar en el servidor la configuración del cortafuegos.
 ![](./images/23.PNG)
 
 Vamos a comprobar el funcionamiento de la conexión SSH desde cada cliente usando el usuario `alvarez1`.
