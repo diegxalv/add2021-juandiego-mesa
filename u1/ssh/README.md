@@ -60,7 +60,7 @@ Configuraremos el cliente1 GNU/Linux con los siguientes valores:
 ![](./images/11.PNG)
 * Vamos a comprobar con ping que conecta a los siguientes equipos:
 
-1) `client14g`
+1) `server14g`
 
 ![](./images/12.PNG)
 
@@ -101,7 +101,7 @@ Desde el propio servidor, verificar que el servicio está en ejecución.
 ![](./images/20.PNG)
 
 > Si el servicio estuviera apagado, ejecutaremos lo siguiente:
-* systemctl enable sshd
+systemctl enable sshd
 
 * `sudo lsof -i:22`, comprobar que el servicio está escuchando por el puerto 22.
 
@@ -162,6 +162,7 @@ La siguiente vez que volvamos a usar PuTTY ya no debe aparecer el mensaje de adv
 
 ![](./images/31.PNG)
 
+
 ## 3.1 Regenerar certificados
 Vamos a cambiar o volver a generar nuevas claves públicas/privadas que identifican nuestro servidor.
 
@@ -179,8 +180,22 @@ Vamos a cambiar o volver a generar nuevas claves públicas/privadas que identifi
 ![](./images/34.PNG)
 
 ## 3.2 Comprobamos
-Comprobar qué sucede al volver a conectarnos desde los dos clientes, usando los usuarios `alvarez2` y `alvarez1`. ¿Qué sucede?
-**No sucede nada, preguntar a David**
+Comprobar qué sucede al volver a conectarnos desde los dos clientes, usando los usuarios `alvarez2` y `alvarez1`.
+
+En **linux** nos dice que las llaves SSH han sido cambiadas. Siguiendo el mensaje que nos da, procederemos a borrar la llave anterior para insertar la nueva.\
+Comando a ejecutar:`ssh-keygen -R 192.168.0.31 -f /home/diego/.ssh/known_hosts`
+![](./images/75.PNG)
+
+Luego de ejecutar el comando, volveremos a realizar la conexión y esta vez si nos dejará conectarnos.
+
+![](./images/76.PNG)
+
+![](./images/77.PNG)
+
+En **windows**, PuTTY te advierte que la llave no está almacenada, y te permite conectarte con el host destino. No te da la seguridad que te da la conexión hecha desde el cliente Linux. 
+
+![](./images/78.PNG)
+
 
 # 4. Personalización del prompt Bash
 Por ejemplo, podemos añadir las siguientes líneas al fichero de configuración de `alvarez1` en la máquina servidor (Fichero `/home/alvarez1/.bashrc`)
