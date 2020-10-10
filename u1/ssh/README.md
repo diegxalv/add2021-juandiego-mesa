@@ -173,7 +173,7 @@ Vamos a cambiar o volver a generar nuevas claves públicas/privadas que identifi
 
 * Reiniciaremos el servicio SSH: `systemctl restart sshd`.
 
-![](./images/33.PNG)
+![](./images/33.PNG) 
 
 * Comprobar que el servicio está en ejecución correctamente: `systemctl status sshd`.
 
@@ -192,7 +192,7 @@ Luego de ejecutar el comando, volveremos a realizar la conexión y esta vez si n
 
 ![](./images/77.PNG)
 
-En **windows**, PuTTY te advierte que la llave no está almacenada, y te permite conectarte con el host destino. No te da la seguridad que te da la conexión hecha desde el cliente Linux. 
+En **windows**, PuTTY te advierte que la llave no está almacenada, y te permite conectarte con el host destino. No te da la seguridad que te da la conexión hecha desde el cliente Linux.
 
 ![](./images/78.PNG)
 
