@@ -158,7 +158,7 @@ La siguiente vez que volvamos a usar PuTTY ya no debe aparecer el mensaje de adv
 
 ![](./images/30.PNG)
 
-* Modificar el fichero de configuración SSH (/etc/ssh/sshd_config) para dejar una única línea: HostKey /etc/ssh/ssh_host_rsa_key. Comentar el resto de líneas con configuración HostKey. Este parámetro define los ficheros de clave publica/privada que van a identificar a nuestro servidor. Con este cambio decimos que sólo se van a utilizar las claves del tipo RSA.
+* Modificar el fichero de configuración SSH (`/etc/ssh/sshd_config`) para dejar una única línea: `HostKey /etc/ssh/ssh_host_rsa_key`. Comentar el resto de líneas con configuración HostKey. Este parámetro define los ficheros de clave publica/privada que van a identificar a nuestro servidor. Con este cambio decimos que sólo se van a utilizar las claves del tipo RSA.
 
 ![](./images/31.PNG)
 
@@ -179,8 +179,8 @@ Vamos a cambiar o volver a generar nuevas claves públicas/privadas que identifi
 ![](./images/34.PNG)
 
 ## 3.2 Comprobamos
-Comprobar qué sucede al volver a conectarnos desde los dos clientes, usando los usuarios alvarez2 y alvarez1. ¿Qué sucede?
-
+Comprobar qué sucede al volver a conectarnos desde los dos clientes, usando los usuarios `alvarez2` y `alvarez1`. ¿Qué sucede?
+**No sucede nada, preguntar a David**
 
 # 4. Personalización del prompt Bash
 Por ejemplo, podemos añadir las siguientes líneas al fichero de configuración de `alvarez1` en la máquina servidor (Fichero `/home/alvarez1/.bashrc`)
@@ -207,6 +207,8 @@ Comprobaremos el funcionamiento de la conexión SSH desde cada cliente.
 ![](./images/35.PNG)
 
 ![](./images/36.PNG)
+
+
 # 5. Autenticación mediante claves públicas
 Vamos a la máquina `client14g`. \
 ¡OJO! No usar el usuario root.
@@ -264,15 +266,87 @@ Podemos tener aplicaciones Windows nativas instaladas en ssh-server mediante el 
 * Instalaremos emulador `Wine` en el `server14g`.
 * Ahora podríamos instalar alguna aplicación (APP2) de Windows en el servidor SSH usando el emulador Wine. O podemos usar el Block de Notas que viene con Wine: wine notepad.
 * Comprobar el funcionamiento de APP2 en server14g.
+> Nota: Al no tener el servidor una interfaz gráfica, no permite ejecutar aplicaciones gráficas, por tanto, intenta ejecutarla pero no logra mostrarla. En cambio, al comprobarla en el cliente, este sí logra ejecutarla satisfactoriamente.
+
+![](./images/47.PNG)
+
 * Comprobar el funcionamiento de APP2, accediendo desde client14g.
 
 ![](./images/48.PNG)
+
 
 # 8. Restricciones de uso
 Vamos a modificar los usuarios del servidor SSH para añadir algunas restricciones de uso del servicio.
 
 ## 8.1 Restricción sobre un usuario
-Vamos a crear una restricción de uso del SSH para un usuario:
+Vamos a crear una restricción de uso del SSH para un usuario.\
+En el servidor tenemos el usuario `alvarez2`. Desde local en el servidor podemos usar sin problemas el usuario.\
+Vamos a modificar SSH de modo que al usar el usuario por SSH desde los clientes tendremos permiso denegado.
 
-* En el servidor tenemos el usuario `alvarez2`. Desde local en el servidor podemos usar sin problemas el usuario.
-* Vamos a modificar SSH de modo que al usar el usuario por SSH desde los clientes tendremos permiso denegado.
+* Vamos a consultar/modificar el fichero de configuración del servidor SSH (`/etc/ssh/sshd_config`) para restringir el acceso a determinados usuarios.
+
+>Consultar las opciones `AllowUsers`, `DenyUsers` (Más información en: `man sshd_config`).
+
+![](./images/49.PNG)
+
+* `/usr/sbin/sshd -t; echo $?`, comprobar si la sintaxis del fichero de configuración del servicio SSH es correcta (Respuesta 0 => OK, 1 => ERROR).
+
+![](./images/50.PNG)
+
+* Comprobaremos la restricción al acceder desde los clientes.
+
+![](./images/51.PNG)
+
+![](./images/61.PNG)
+
+
+## 8.2 Restricción sobre una aplicación
+Vamos a crear una restricción de permisos sobre determinadas aplicaciones.
+
+* Crear grupo `remoteapps`.
+
+![](./images/52.PNG)
+
+* Incluir al usuario alumno4 en el grupo remoteapps.
+
+![](./images/53.PNG)
+
+* Localizar el programa APP1. Posiblemente tenga permisos 755.
+
+![](./images/54.PNG)
+
+* Poner al programa APP1 el grupo propietario a remoteapps.
+
+![](./images/55.PNG)
+
+![](./images/56.PNG)
+
+* Poner los permisos del ejecutable de APP1 a 750. Para impedir que los usuarios que no pertenezcan al grupo puedan ejecutar el programa.
+
+![](./images/57.PNG)
+
+* Comprobamos el funcionamiento en el servidor en local. \
+Con el usuario `diego` no se consigue abrir geany, pero con `alvarez4` si.
+
+![](./images/58.PNG)
+
+![](./images/60.PNG)
+
+* Comprobamos el funcionamiento desde el cliente en remoto (Recordar ssh -X ...).
+
+![](./images/59.PNG)
+
+
+# 9. Servidor SSH en Windows
+* Configurar el servidor Windows con los siguientes valores:
+    * SO Windows Server
+    * Nombre de equipo: `server14s`
+Configuración de las MV's
+* Añadir en C:\Windows\System32\drivers\etc\hosts el equipo clientXXg y clientXXw.
+* Comprobar haciendo ping a ambos equipos.
+* Instalar y configurar el servidor SSH en Windows.
+    * Elegir la opción que se quiera: OpenSSH o integrado.
+    * Documentar el proceso de instalación y configuración.
+* Comprobar acceso SSH desde los clientes Windows y GNU/Linux al servidor SSH Windows.
+    * `netstat -n` en Windows.
+    * `lsof -i -n` en GNU/Linux.
