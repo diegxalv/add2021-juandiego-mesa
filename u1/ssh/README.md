@@ -169,11 +169,11 @@ Vamos a cambiar o volver a generar nuevas claves públicas/privadas que identifi
 * Ir al servidor.
 * Como usuario root ejecutamos: `ssh-keygen -t rsa -f /etc/ssh/ssh_host_rsa_key`. ¡OJO! No poner password al certificado.
 
-![](./images/32.PNG)
+![](./images/32.PNG) 
 
 * Reiniciaremos el servicio SSH: `systemctl restart sshd`.
 
-![](./images/33.PNG) 
+![](./images/33.PNG)
 
 * Comprobar que el servicio está en ejecución correctamente: `systemctl status sshd`.
 
