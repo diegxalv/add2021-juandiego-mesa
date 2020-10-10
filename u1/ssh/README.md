@@ -332,7 +332,7 @@ Con el usuario `diego` no se consigue abrir geany, pero con `alvarez4` si.
 
 ![](./images/60.PNG)
 
-* Comprobamos el funcionamiento desde el cliente en remoto (Recordar ssh -X ...).
+* Comprobamos el funcionamiento desde el cliente en remoto (`ssh -X alvarez4@server14g`).
 
 ![](./images/59.PNG)
 
@@ -342,11 +342,65 @@ Con el usuario `diego` no se consigue abrir geany, pero con `alvarez4` si.
     * SO Windows Server
     * Nombre de equipo: `server14s`
 Configuración de las MV's
-* Añadir en C:\Windows\System32\drivers\etc\hosts el equipo clientXXg y clientXXw.
+* Añadir en C:\Windows\System32\drivers\etc\hosts los equipos `client14g` y `client14w`.
+
+![](./images/62.PNG)
+
 * Comprobar haciendo ping a ambos equipos.
-* Instalar y configurar el servidor SSH en Windows.
-    * Elegir la opción que se quiera: OpenSSH o integrado.
-    * Documentar el proceso de instalación y configuración.
-* Comprobar acceso SSH desde los clientes Windows y GNU/Linux al servidor SSH Windows.
+
+![](./images/63.PNG)
+
+![](./images/64.PNG)
+
+**Instalación y configuración del servidor SSH en Windows. (OpenSSH)**
+
+* Descargaremos la última versión de OpenSSH-Win64.zip., y la descomprimiremos en `C:\Program files\OpenSSH`.
+
+>En caso de haber descargado la versión de 32 bits (OpenSSH-Win32), extraer el contenido del ZIP en C:\Program files\OpenSSH (x86).
+
+* `PS> cd ‘C:\Program files\OpenSSH`’, Inicia PowerShell como Administrador y movernos hasta `C:\Program files\OpenSSH`:
+Ejecutar el script para instalar los servicios “sshd” y “ssh-agent”:
+
+```
+PS> Set-ExecutionPolicy –ExecutionPolicy Bypass
+PS> .\install-sshd.ps1
+```
+
+![](./images/65.PNG)
+
+* Al terminar debe indicar que los servicios se han instalado de forma satisfactoria. Podemos comprobar que se han instalado los servicios con el siguiente comando:
+`PS> Get-Service sshd,ssh-agent`
+
+![](./images/66.PNG)
+
+* Vamos a generar las claves (certificados) del servidor:
+
+```
+PS> .\ssh-keygen.exe
+PS> .\FixHostFilePermissions.ps1 -Confirm:$false
+```
+![](./images/67.PNG)
+
+![](./images/68.PNG)
+
+* Habilitar la regla de nombre “SSH” en el Firewall de Windows para permitir (Allow) conexiones TCP entrantes (Inbound) en el puerto 22 (SSH): \
+`PS> New-NetFirewallRule -Protocol TCP -LocalPort 22 -Direction Inbound -Action Allow -DisplayName SSH`
+
+![](./images/69.PNG)
+
+* Configuraremos los servicios para que inicien automáticamente:
+
+```
+PS> Set-Service sshd -StartupType Automatic
+PS> Set-Service ssh-agent -StartupType Automatic
+```
+Iniciamos el servicio: `PS> Start-Service sshd`
+
+![](./images/70.PNG)
+
+* Comprobaremos el acceso SSH desde los clientes Windows y GNU/Linux al servidor SSH Windows.
+
+![](./images/71.PNG)
+
     * `netstat -n` en Windows.
     * `lsof -i -n` en GNU/Linux.
