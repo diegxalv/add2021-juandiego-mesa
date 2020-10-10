@@ -402,5 +402,13 @@ Iniciamos el servicio: `PS> Start-Service sshd`
 
 ![](./images/71.PNG)
 
-    * `netstat -n` en Windows.
-    * `lsof -i -n` en GNU/Linux.
+![](./images/72.PNG)
+
+
+* `netstat -n` en Windows.
+
+![](./images/73.PNG)
+
+* `lsof -i -n` en GNU/Linux.
+
+![](./images/74.PNG)
