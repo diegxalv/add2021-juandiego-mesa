@@ -101,41 +101,35 @@ barco, y castillo como la siguiente:
 
 ```
 [global]
-  netbios name = smb-serverXX
-  workgroup = cursoXXYY
-  server string = Servidor de nombre-alumno-XX
+  netbios name = server14g
+  workgroup = curso2021
+  server string = Servidor de diego14
   security = user
   map to guest = bad user
-  guest account = smbguest
-
-[cdrom]
-  path = /dev/cdrom
-  guest ok = yes
-  read only = yes
+  guest account = sambaguest
 
 [public]
-  comment = public de nombre-alumno-XX
-  path = /srv/sambaXX/public.d
+  comment = public de diego14
+  path = /srv/samba14/public.d
   guest ok = yes
   read only = yes
 
 [castillo]
-  comment = castillo de nombre-alumno-XX
-  path = /srv/sambaXX/castillo.d
+  comment = castillo de diego14
+  path = /srv/samba14/castillo.d
   read only = no
   valid users = @soldados
 
 [barco]
-  comment = barco de nombre-alumno-XX
-  path = /srv/sambaXX/barco.d
+  comment = barco de diego14
+  path = /srv/samba14/barco.d
   read only = no
   valid users = pirata1, pirata2
 ```
 
-* No vale copiar y pegar el ejemplo anterior. Hay que adaptarlo a tus requisitos.
 * Abrimos una consola para comprobar los resultados.
-    * `cat /etc/samba/smb.conf`
-    * `testparm`
+    * `testparm`, verificaremos la sintaxis del fichero de configuración.
+    * `more /etc/samba/smb.conf`, consultaremos el contenido del fichero de configuración.
 
 ## 1.6 Usuarios Samba
 
