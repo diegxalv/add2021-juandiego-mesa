@@ -1,56 +1,89 @@
 # Samba (con OpenSUSE y Windows)
 
-#1. Servidor Samba (MV1)
+# 1. Servidor Samba (MV1)
 ## 1.1 Preparativos
 
 * Configurar el servidor GNU/Linux. Usar los siguientes valores:
-    * Nombre de equipo: serverXXg (Donde XX es el número del puesto de cada uno).
-* Añadir en /etc/hosts los equipos clientXXg y c.lientXXw (Donde XX es el número del puesto de cada uno).
+    * Nombre de equipo: server14g.
+    * Añadir en /etc/hosts los equipos client14g y client14w.
 
-Capturar salida de los comandos siguientes en el servidor:
-```
-hostname -f
-ip a
-lsblk
-sudo blkid
-```
+![](./images/1.png)
 
 ## 1.2 Usuarios locales
 
 Vamos a GNU/Linux, y creamos los siguientes grupos y usuarios:
 
-* Crear los grupos piratas, soldados y todos.
-* Crear el usuario smbguest. Para asegurarnos que nadie puede usar smbguest para entrar en nuestra máquina mediante login, vamos a modificar este usuario y le ponemos como shell /bin/false.
+* Crear los grupos piratas, soldados y sambausers.
+![](./images/2.png)
+* Crear el usuario sambaguest. Para asegurarnos que nadie puede usar sambaguest para entrar en nuestra máquina mediante login, vamos a modificar este usuario y le ponemos como shell `/bin/false`.
+
+![](./images/3.png)
+
+![](./images/4.png)
+
+> Podemos hacer estos cambios por entorno gráfico usando Yast, o por comandos editando el fichero /etc/passwd.
+
 * Dentro del grupo piratas incluir a los usuarios pirata1, pirata2 y supersamba.
+![](./images/5.png)
+![](./images/7.png)
+
+
 * Dentro del grupo soldados incluir a los usuarios soldado1 y soldado2 y supersamba.
-* Dentro del grupo todos, poner a todos los usuarios soldados, pitatas, supersamba y a smbguest.
+![](./images/6.png)
+![](./images/8.png)
+
+
+* Dentro del grupo sambausers, poner a todos los usuarios soldados, pitatas, supersamba y a sambaguest.
+![](./images/9.png)
 
 
 ## 1.3 Crear las carpetas para los futuros recursos compartidos
 
 * Vamos a crear las carpetas de los recursos compartidos con los permisos siguientes:
 
-|                 | Public          | Castillo        | Barco           |
-| --------------- | --------------- | --------------- | --------------- |
-| Directorio base | /srv/sambaXX/ | /srv/sambaXX/ | /srv/sambaXX/ |
-| Carpeta         | public.d      | castillo.d    | barco.d       |
-| Usuario prop.   | supersamba    | supersamba     | supersamba    |
-| Grupo prop.     | sambausers    | soldados       | piratas       |
-| Permisos        | 777             | 777             | 777             |
+| Recurso         | Directorio              | Usuario          | Grupo           | Permisos      |
+| --------------- | ---------------         | ---------------  | --------------- | ------------- |
+| Public          | /srv/samba14/public.d   | supersamba       | sambausers      | 770           |
+| Castillo        | /srv/samba14/castillo.d | supersamba       | soldados        | 770           |
+| Barco           | /srv/samba14/barco.d    | supersamba       | piratas         | 770           |
+
+![](./images/10.png)
+
+![](./images/11.png)
+
+![](./images/12.png)
+
 
 
 ## 1.4 Configurar el servidor Samba
 
 * Vamos a hacer una copia de seguridad del fichero de configuración existente
-`cp /etc/samba/smb.conf /etc/samba/smb.conf.000`.
+`cp /etc/samba/smb.conf /etc/samba/smb.conf.bak`.
 
+![](./images/13.png)
+
+
+> Para instalar y configurar el servicio Samba, podemos usar comandos o el entorno gráfico. Como estamos en OpenSUSE vamos a usar Yast.
 
 * `Yast -> Samba Server`
+![](./images/14.png)
     * Workgroup: `curso2021`
     * Sin controlador de dominio.
+![](./images/15.png)
 * En la pestaña de `Inicio` definimos
     * Iniciar el servicio durante el arranque de la máquina.
     * Ajustes del cortafuegos -> Abrir puertos
+![](./images/16.png)
+> **Comprobar CORTAFUEGOS** \
+  Para descartar un problema del servidor Samba con el cortafuegos, usaremos el comando nmap -Pn IP-servidor-Samba desde otra máquina GNU/Linux. Los puertos SMB/CIFS (139 y 445) deben estar abiertos.
+
+En este caso, al realizar un nmap, los puertos aparecen como cerrados.
+![](./images/18.png)
+Para abrirlos, vamos a abrir yaST -> Seguridad y usuarios -> Cortafuegos.
+Dentro, iremos hasta External > puertos e introduciremos los dos puertos que aparecen cerrados separados por un espacio al medio.
+![](./images/17.png)
+Reiniciamos el servidor, y al realizar un nmap de nuevo, los puertos aparecen abiertos.
+![](./images/19.png)
 
 ## 1.5 Crear los recursos compartidos de Samba
 
@@ -59,7 +92,7 @@ Podemos hacerlo modificando el fichero de configuración o por entorno gráfico 
 
 * Capturar imágenes del proceso.
 * `Yast -> Samba Server -> Recursos compartidos -> Configurar`.
-* Tenemos que conseguir una configuración con las secciones global, cdrom, public,
+* Tenemos que conseguir una configuración con las secciones global, public,
 barco, y castillo como la siguiente:
 
 > * Donde pone XX, sustituir por el núméro del puesto de cada uno
