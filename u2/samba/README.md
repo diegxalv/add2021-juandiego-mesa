@@ -3,9 +3,9 @@
 # 1. Servidor Samba (MV1)
 ## 1.1 Preparativos
 
-* Configurar el servidor GNU/Linux. Usar los siguientes valores:
-    * Nombre de equipo: server14g.
-    * Añadir en /etc/hosts los equipos client14g y client14w.
+* Configuraremos el servidor GNU/Linux, y usaremos los siguientes valores:
+    * Nombre de equipo: `server14g`.
+    * Añadiremos en `/etc/hosts` los equipos `client14g` y `client14w`.
 
 ![](./images/1.png)
 
@@ -13,10 +13,10 @@
 
 Vamos a GNU/Linux, y creamos los siguientes grupos y usuarios:
 
-* Crear los grupos piratas, soldados y sambausers.
+* Crearemos los grupos `piratas`, `soldados` y `sambausers`.
 
 ![](./images/2.png)
-* Crear el usuario sambaguest. Para asegurarnos que nadie puede usar sambaguest para entrar en nuestra máquina mediante login, vamos a modificar este usuario y le ponemos como shell `/bin/false`.
+* Crearemos el usuario `sambaguest`. Para asegurarnos que nadie puede usar `sambaguest` para entrar en nuestra máquina mediante login, vamos a modificar este usuario y le ponemos como shell `/bin/false`.
 
 ![](./images/3.png)
 
@@ -24,24 +24,29 @@ Vamos a GNU/Linux, y creamos los siguientes grupos y usuarios:
 
 > Podemos hacer estos cambios por entorno gráfico usando Yast, o por comandos editando el fichero /etc/passwd.
 
-* Dentro del grupo piratas incluir a los usuarios pirata1, pirata2 y supersamba.
+* Dentro del grupo piratas incluir a los usuarios `pirata1`, `pirata2` y `supersamba`.
 
 ![](./images/5.png)
 ![](./images/7.png)
 
 
-* Dentro del grupo soldados incluir a los usuarios soldado1 y soldado2 y supersamba.
+* Dentro del grupo soldados incluir a los usuarios `soldado1`, `soldado2` y `supersamba`.
 
 ![](./images/6.png)
 ![](./images/8.png)
 
 
-* Dentro del grupo sambausers, poner a todos los usuarios soldados, pitatas, supersamba y a sambaguest.
+* Dentro del grupo `sambausers`, poner a todos los usuarios `soldados`, `piratas`, `supersamba` y a `sambaguest`.
 
 ![](./images/9.png)
 
 
 ## 1.3 Crear las carpetas para los futuros recursos compartidos
+
+Creamos la carpeta base para los recursos de red de Samba:
+* `mkdir /srv/samba14`
+* `chmod 755 /srv/samba14`
+
 
 * Vamos a crear las carpetas de los recursos compartidos con los permisos siguientes:
 
@@ -79,6 +84,7 @@ Vamos a GNU/Linux, y creamos los siguientes grupos y usuarios:
     * Iniciar el servicio durante el arranque de la máquina.
     * Ajustes del cortafuegos -> Abrir puertos
 ![](./images/16.png)
+
 > **Comprobar CORTAFUEGOS** \
   Para descartar un problema del servidor Samba con el cortafuegos, usaremos el comando nmap -Pn IP-servidor-Samba desde otra máquina GNU/Linux. Los puertos SMB/CIFS (139 y 445) deben estar abiertos.
 
@@ -90,19 +96,20 @@ Dentro, iremos hasta External > puertos e introduciremos los dos puertos que apa
 Reiniciamos el servidor, y al realizar un nmap de nuevo, los puertos aparecen abiertos.
 ![](./images/19.png)
 
+
 ## 1.5 Crear los recursos compartidos de Samba
 
-Vamos a configurar los recursos compartido del servidor Samba.
-Podemos hacerlo modificando el fichero de configuración o por entorno gráfico con Yast.
+Vamos a configurar los recursos compartidos de red en el servidor.
+Podemos hacerlo modificando el fichero de configuración o por entorno gráfico con YaST.
 
 * Capturar imágenes del proceso.
 * `Yast -> Samba Server -> Recursos compartidos -> Configurar`.
 * Tenemos que conseguir una configuración con las secciones global, public,
 barco, y castillo como la siguiente:
 
-> * Donde pone XX, sustituir por el núméro del puesto de cada uno
 > * `public`, será un recurso compartido accesible para todos los usuarios en modo lectura.
-> * `cdrom`, es el recurso dispositivo cdrom de la máquina donde está instalado el servidor samba.
+> * `barco`, recurso compartido de red de lectura/escritura para todos los piratas.
+> * `castillo`, recurso compartido de red de lectura/escritura para todos los soldados.
 
 ```
 [global]
@@ -134,26 +141,33 @@ barco, y castillo como la siguiente:
 
 * Abrimos una consola para comprobar los resultados.
     * `testparm`, verificaremos la sintaxis del fichero de configuración.
+
+![](./images/22.png)
     * `more /etc/samba/smb.conf`, consultaremos el contenido del fichero de configuración.
+
+![](./images/23.png) \
+![](./images/24.png)
 
 ## 1.6 Usuarios Samba
 
 Después de crear los usuarios en el sistema, hay que añadirlos a Samba.
 * `smbpasswd -a USUARIO`, para crear clave Samba de USUARIO.
-    * **¡OJO!: NO te saltes este paso.**
     * USUARIO son los usuarios que se conectarán a los recursos comartidos SMB/CIFS.
-    * Esto hay que hacerlo para cada uno de los usuarios de Samba.
-* `pdbedit -L`, para comprobar la lista de usuarios Samba.
-* Capturar imagen del comando anterior.
+    * Esto hay que hacerlo para cada uno de los usuarios de Samba. \
+![](./images/25.png)
 
+* `pdbedit -L`, para comprobar la lista de usuarios Samba.\
+![](./images/26.png)
 
 ## 1.7 Reiniciar
 
 Ahora que hemos terminado con el servidor, hay que recargar los ficheros de configuración del servicio. Esto es, leer los cambios de configuración.
 
 Podemos hacerlo por `Yast -> Servicios`, o usar los comandos.
-* Servicio smb `systemctl reload smb`
-* Servicio nmb `systemctl reload nmb`
+* Servicio smb `systemctl restart smb`
+* Servicio nmb `systemctl restart nmb`
+
+![](./images/27.png)
 
 | Comandos Servicio              | Descripción |
 | ------------------------------ | ----------- |
@@ -164,16 +178,9 @@ Podemos hacerlo por `Yast -> Servicios`, o usar los comandos.
 | systemctl status  SERVICE-NAME | Ver estado |
 
 * Capturar imagen de los siguientes comandos de comprobación:
-```
-sudo testparm  # Verifica la sintaxis del fichero de configuración del servidor Samba
-sudo lsof -i   # Vemos que el servicio SMB/CIF está a la escucha
-```
 
-> **Comprobar CORTAFUEGOS**
->
-> Para descartar un problema con el cortafuegos del servidor Samba.
-> Probamos el comando `nmap -Pn smb-serverXX` desde la máquina real, u otra
-máquina GNU/Linux. Deberían verse los puertos SMB/CIFS(139 y 445) abiertos.
+`sudo lsof -i`, comprobaremos que el servicio SMB/CIF está a la escucha. \
+![](./images/28.png)
 
 ---
 
@@ -190,19 +197,32 @@ máquina GNU/Linux. Deberían verse los puertos SMB/CIFS(139 y 445) abiertos.
 
 Desde un cliente Windows vamos a acceder a los recursos compartidos del servidor Samba.
 
-* Escribimos `\\ip-del-servidor-samba` y vemos lo siguiente:
-
+* Escribimos `\\172.19.14.31` y vemos lo siguiente:
+![](./images/29.png)   
 * Acceder al recurso compartido con el usuario `invitado`
     * `net use` para ver las conexiones abiertas.
-    * `net use * /d /y`, para borrar todas las conexión SMB/CIFS que se hadn realizado.
+    * `net use * /d /y`, para borrar todas las conexión SMB/CIFS que se han realizado.
+
+![](./images/31.png)  
+
 * Acceder al recurso compartido con el usuario `soldado`
     * `net use` para ver las conexiones abiertas.
     * `net use * /d /y`, para borrar todas las conexión SMB/CIFS que se han realizado.
-* Acceder al recurso compartido con el usuario `pirata`
+
+![](./images/32.png)
+
+![](./images/33.png)    
+* Acceder al recurso compartido con el usuario `pirata`:
+
+![](./images/34.png)
+
 * Ir al servidor Samba.
 * Capturar imagen de los siguientes comandos para comprobar los resultados:
     * `smbstatus`, desde el servidor Samba.
+
+![](./images/35.png)    
     * `lsof -i`, desde el servidor Samba.
+![](./images/36.png)    
 
 ---
 
