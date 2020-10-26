@@ -14,6 +14,7 @@
 Vamos a GNU/Linux, y creamos los siguientes grupos y usuarios:
 
 * Crear los grupos piratas, soldados y sambausers.
+
 ![](./images/2.png)
 * Crear el usuario sambaguest. Para asegurarnos que nadie puede usar sambaguest para entrar en nuestra máquina mediante login, vamos a modificar este usuario y le ponemos como shell `/bin/false`.
 
@@ -24,16 +25,19 @@ Vamos a GNU/Linux, y creamos los siguientes grupos y usuarios:
 > Podemos hacer estos cambios por entorno gráfico usando Yast, o por comandos editando el fichero /etc/passwd.
 
 * Dentro del grupo piratas incluir a los usuarios pirata1, pirata2 y supersamba.
+
 ![](./images/5.png)
 ![](./images/7.png)
 
 
 * Dentro del grupo soldados incluir a los usuarios soldado1 y soldado2 y supersamba.
+
 ![](./images/6.png)
 ![](./images/8.png)
 
 
 * Dentro del grupo sambausers, poner a todos los usuarios soldados, pitatas, supersamba y a sambaguest.
+
 ![](./images/9.png)
 
 
@@ -69,6 +73,7 @@ Vamos a GNU/Linux, y creamos los siguientes grupos y usuarios:
 ![](./images/14.png)
     * Workgroup: `curso2021`
     * Sin controlador de dominio.
+    
 ![](./images/15.png)
 * En la pestaña de `Inicio` definimos
     * Iniciar el servicio durante el arranque de la máquina.
