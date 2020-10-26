@@ -73,7 +73,7 @@ Vamos a GNU/Linux, y creamos los siguientes grupos y usuarios:
 ![](./images/14.png)
     * Workgroup: `curso2021`
     * Sin controlador de dominio.
-    
+
 ![](./images/15.png)
 * En la pestaña de `Inicio` definimos
     * Iniciar el servicio durante el arranque de la máquina.
@@ -83,7 +83,7 @@ Vamos a GNU/Linux, y creamos los siguientes grupos y usuarios:
   Para descartar un problema del servidor Samba con el cortafuegos, usaremos el comando nmap -Pn IP-servidor-Samba desde otra máquina GNU/Linux. Los puertos SMB/CIFS (139 y 445) deben estar abiertos.
 
 En este caso, al realizar un nmap, los puertos aparecen como cerrados.
-![](./images/18.png)
+![](./images/18.png) \
 Para abrirlos, vamos a abrir yaST -> Seguridad y usuarios -> Cortafuegos.
 Dentro, iremos hasta External > puertos e introduciremos los dos puertos que aparecen cerrados separados por un espacio al medio.
 ![](./images/17.png)
