@@ -230,28 +230,42 @@ Desde un cliente Windows vamos a acceder a los recursos compartidos del servidor
 
 * Abrir una shell de windows.
 * `net use /?`, para consultar la ayuda del comando.
-* `net use`, para consultar todas las conexiones/recursos conectados hacemos .
+![](./images/37.png)    
+
+* `net use`, para consultar todas las conexiones/recursos.
+
+![](./images/38.png)    
 * Si hubiera alguna conexión abierta la cerramos.
     * `net use * /d /y`, para cerrar las conexiones SMB.
+
+![](./images/39.png)    
     * `net use` ahora vemos que NO hay conexiones establecidas.
 
+![](./images/38.png)
+
 Capturar imagen de los comandos siguientes:
-* `net view \\IP-SERVIDOR-SAMBA`, para ver los recursos de esta máquina.
+* `net view \\172.19.14.31`, para ver los recursos de esta máquina.
 
-> Para REVISAR:
-> * `net view`, para ver las máquinas (SMB/CIFS) accesibles por la red.
-> * [Error 6118](https://stackoverflow.com/questions/13676714/command-prompt-net-view-system-error-6118) que aparece el ejecutar `net view` en Windows.
+![](./images/40.png)    
 
-* `net use S: \\IP-SERVIDOR-SAMBA\recurso clave /USER:usuario /p:yes` crear una conexión con el recurso compartido y lo monta en la unidad S.
-    * Probar a montar el recurso `barco`.
+* `net use S: \\172.19.14.31\barco /USER:pirata1 /p:yes` crear una conexión con el recurso compartido `barco` y lo monta en la unidad S.
 
-> Con la opción /p:yes hacemos el montaje persistente. De modo que se mantiene en cada reinicio de máquina.
+![](./images/41.png)    
 
 * `net use`, comprobamos.
+
+![](./images/42.png)
+
 * Ahora podemos entrar en la unidad S ("s:") y crear carpetas, etc.
 * Capturar imagen de los siguientes comandos para comprobar los resultados:
     * `smbstatus`, desde el servidor Samba.
+
+    ![](./images/43.png)
+
     * `lsof -i`, desde el servidor Samba.
+
+    ![](./images/44.png)
+
 
 ---
 
@@ -267,28 +281,35 @@ Capturar imagen de los comandos siguientes:
 
 Desde en entorno gráfico, podemos comprobar el acceso a recursos compartidos SMB/CIFS.
 
-> Estas son algunas herramientas:
-> * Yast en OpenSUSE
-> * Nautilus en GNOME
-> * Konqueror en KDE
-> * En Ubuntu podemos ir a "Lugares -> Conectar con el servidor..."
-> * También podemos instalar "smb4k".
-> * existen otras para otros entornos gráficos. Busca en tu GNU/Linux la forma de acceder vía GUI.
 
 Ejemplo accediendo al recurso prueba del servidor Samba,
-pulsamos CTRL+L y escribimos `smb://IP-SERVIDOR-SAMBA`:
+pulsamos CTRL+L y escribimos `smb://172.19.14.31`:
 
-![linux-gui-client](./images/linux-gui-client.png)
+![](./images/45.png)
 
 > En el momento de autenticarse para acceder al recurso remoto, poner
-en **Dominio** el *nombre-netbios-del-servidor-samba*.
+en **Dominio** el *nombre-netbios-del-servidor-samba*. \
+![](./images/46.png)
 
 Capturar imagen de lo siguiente:
 * Probar a crear carpetas/archivos en `castillo` y en  `barco`.
+
+![](./images/47.png)
+
+**FALTA BARCO**
+
 * Comprobar que el recurso `public` es de sólo lectura.
+
+![](./images/48.png)
+
 * Capturar imagen de los siguientes comandos para comprobar los resultados:
     * `smbstatus`, desde el servidor Samba.
+
+![](./images/49.png)
+
     * `lsof -i`, desde el servidor Samba.
+
+![](./images/50.png)
 
 ---
 
@@ -309,7 +330,10 @@ equipo usaremos comandos para acceder a la carpeta compartida.
 >    * Hay que parar el cortafuegos para que funcione (`systemctl stop firewalld`), o bien
 >    * ejecutar comando desde la máquina real.
 
-* Probar desde OpenSUSE: `smbclient --list IP-SERVIDOR-SAMBA`, Muestra los recursos SMB/CIFS de un equipo.
+* Probar desde OpenSUSE: `smbclient --list 172.19.14.31`, Muestra los recursos SMB/CIFS de un equipo.
+
+![](./images/51.png)
+
 * Ahora crearemos en local la carpeta `/mnt/remotoXX/castillo`.
 * **MONTAJE MANUAL**: Con el usuario root, usamos el siguiente comando para montar un recurso compartido de Samba Server, como si fuera una carpeta más de nuestro sistema:
 `mount -t cifs //172.AA.XX.55/castillo /mnt/remotoXX/castillo -o username=soldado1`
