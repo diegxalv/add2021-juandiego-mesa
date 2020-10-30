@@ -78,7 +78,7 @@ Crearemos la carpeta base para los recursos de red de Samba, y le asignaremos lo
     * Workgroup: `curso2021`
     * Sin controlador de dominio. \
 ![](./images/15.png)
-* En la pestaña de `Inicio` definimos
+* En la pestaña de `Inicio` definimos:
     * Iniciar el servicio durante el arranque de la máquina.
     * Ajustes del cortafuegos -> Abrir puertos
 ![](./images/16.png)
@@ -100,7 +100,6 @@ Reiniciamos el servidor, y al realizar un nmap de nuevo, los puertos aparecen ab
 Vamos a configurar los recursos compartidos de red en el servidor.
 Podemos hacerlo modificando el fichero de configuración o por entorno gráfico con YaST.
 
-* Capturar imágenes del proceso.
 * `Yast -> Samba Server -> Recursos compartidos -> Configurar`.
 * Tenemos que conseguir una configuración con las secciones global, public,
 barco, y castillo como la siguiente:
@@ -138,10 +137,10 @@ barco, y castillo como la siguiente:
 ```
 
 * Abrimos una consola para comprobar los resultados.
-    * `testparm`, verificaremos la sintaxis del fichero de configuración.
+* `testparm`, verificaremos la sintaxis del fichero de configuración.
 
 ![](./images/22.png)
-    * `more /etc/samba/smb.conf`, consultaremos el contenido del fichero de configuración.
+* `more /etc/samba/smb.conf`, consultaremos el contenido del fichero de configuración.
 
 ![](./images/23.png) \
 ![](./images/24.png)
@@ -149,12 +148,12 @@ barco, y castillo como la siguiente:
 ## 1.6 Usuarios Samba
 
 Después de crear los usuarios en el sistema, hay que añadirlos a Samba.
-* `smbpasswd -a USUARIO`, para crear clave Samba de USUARIO.
+* `smbpasswd -a USUARIO`, para crear la clave Samba de `USUARIO`.
     * USUARIO son los usuarios que se conectarán a los recursos comartidos SMB/CIFS.
     * Esto hay que hacerlo para cada uno de los usuarios de Samba. \
 ![](./images/25.png)
 
-* `pdbedit -L`, para comprobar la lista de usuarios Samba.\
+  * `pdbedit -L`, para comprobar la lista de usuarios Samba.\
 ![](./images/26.png)
 
 ## 1.7 Reiniciar
