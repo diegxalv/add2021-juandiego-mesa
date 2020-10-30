@@ -271,7 +271,7 @@ Desde el entorno gráfico, podemos comprobar el acceso a recursos compartidos SM
 
 Vamos a abrir un explorador de archivos, pulsamos CTRL+L y escribimos `smb://172.19.14.31`:
 
-![](./images/45.png)
+![](./images/45.png) 
 
 > En el momento de autenticarse para acceder al recurso remoto, poner
 en **Dominio** el *nombre-netbios-del-servidor-samba*. \
