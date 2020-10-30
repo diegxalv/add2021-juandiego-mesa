@@ -245,7 +245,6 @@ Desde un cliente Windows vamos a acceder a los recursos compartidos del servidor
 ![](./images/42.png)
 
 * Ahora podemos entrar en la unidad S ("s:") y crear carpetas, etc.
-* Capturar imagen de los siguientes comandos para comprobar los resultados:
     * `smbstatus`, desde el servidor Samba.
 
     ![](./images/43.png)
@@ -260,8 +259,8 @@ Desde un cliente Windows vamos a acceder a los recursos compartidos del servidor
 # 3 Cliente GNU/Linux
 
 * Configuraremos el cliente GNU/Linux.
-* Usar nombre y la IP que hemos establecido al comienzo.
-* Configurar el fichero `/etc/hosts` de la máquina.
+* Usaremos el nombre y la IP que hemos establecido al comienzo.
+* Configuraremos el fichero `/etc/hosts` de la máquina.
 
 ---
 
@@ -278,8 +277,8 @@ Vamos a abrir un explorador de archivos, pulsamos CTRL+L y escribimos `smb://172
 en **Dominio** el *nombre-netbios-del-servidor-samba*. \
 ![](./images/46.png)
 
-Capturar imagen de lo siguiente:
-* Probar a crear carpetas/archivos en `castillo` y en  `barco`.
+
+* Probaremos a crear carpetas/archivos en `castillo` y en  `barco`.
 
 ![](./images/47.png)
 
@@ -288,23 +287,21 @@ Capturar imagen de lo siguiente:
 
 ![](./images/48.png)
 
-* Capturar imagen de los siguientes comandos para comprobar los resultados:
-    * `smbstatus`, desde el servidor Samba.
+  * `smbstatus`, desde el servidor Samba.
 
 ![](./images/49.png)
 
-    * `lsof -i`, desde el servidor Samba.
+  * `lsof -i`, desde el servidor Samba.
 
 ![](./images/50.png)
 
----
 
 ## 3.2 Cliente GNU/Linux comandos
 
 * Vamos a un equipo GNU/Linux que será nuestro cliente Samba. Desde este
 equipo usaremos comandos para acceder a la carpeta compartida.
 
-* Probar desde OpenSUSE: `smbclient --list 172.19.14.31`, esto nos muestra los recursos SMB/CIFS de un equipo.
+* Probaremos desde OpenSUSE: `smbclient --list 172.19.14.31`, esto nos muestra los recursos SMB/CIFS de un equipo.
 
 ![](./images/51.png)
 
@@ -323,8 +320,7 @@ debe aparecer en la máquina del servidor Samba. ¡Comprobarlo! \
 ![](./images/54.png)
 > * Para desmontar el recurso remoto usamos el comando `umount`.
 
-* Capturar imagen de los siguientes comandos para comprobar los resultados:
-    * `smbstatus`, desde el servidor Samba.
+  * `smbstatus`, desde el servidor Samba.
 
 ![](./images/55.png)
 
