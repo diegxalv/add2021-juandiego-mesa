@@ -271,7 +271,7 @@ Capturar imagen de los comandos siguientes:
 
 # 3 Cliente GNU/Linux
 
-* [Configurar](../../global/configuracion/opensuse.md) el cliente GNU/Linux.
+* Configuraremos el cliente GNU/Linux.
 * Usar nombre y la IP que hemos establecido al comienzo.
 * Configurar el fichero `/etc/hosts` de la máquina.
 
@@ -279,11 +279,10 @@ Capturar imagen de los comandos siguientes:
 
 ## 3.1 Cliente GNU/Linux GUI
 
-Desde en entorno gráfico, podemos comprobar el acceso a recursos compartidos SMB/CIFS.
+Desde el entorno gráfico, podemos comprobar el acceso a recursos compartidos SMB/CIFS.
 
 
-Ejemplo accediendo al recurso prueba del servidor Samba,
-pulsamos CTRL+L y escribimos `smb://172.19.14.31`:
+Vamos a abrir un explorador de archivos, pulsamos CTRL+L y escribimos `smb://172.19.14.31`:
 
 ![](./images/45.png)
 
@@ -296,7 +295,6 @@ Capturar imagen de lo siguiente:
 
 ![](./images/47.png)
 
-**FALTA BARCO**
 
 * Comprobar que el recurso `public` es de sólo lectura.
 
@@ -315,79 +313,53 @@ Capturar imagen de lo siguiente:
 
 ## 3.2 Cliente GNU/Linux comandos
 
-Capturar imagenes de todo el proceso.
-
-> Existen comandos (`smbclient`, `mount` , `smbmount`, etc.) para ayudarnos
-a acceder vía comandos al servidor Samba desde el cliente.
-> Puede ser que con las nuevas actualizaciones y cambios de las distribuciones
-alguno haya cambiado de nombre. ¡Ya lo veremos!
-
 * Vamos a un equipo GNU/Linux que será nuestro cliente Samba. Desde este
 equipo usaremos comandos para acceder a la carpeta compartida.
 
-> * Probar desde una máquina Ubuntu `sudo smbtree` (REVISAR: no muestra nada)
->    * Esto muestra todos los equipos/recursos de la red SMB/CIFS.
->    * Hay que parar el cortafuegos para que funcione (`systemctl stop firewalld`), o bien
->    * ejecutar comando desde la máquina real.
-
-* Probar desde OpenSUSE: `smbclient --list 172.19.14.31`, Muestra los recursos SMB/CIFS de un equipo.
+* Probar desde OpenSUSE: `smbclient --list 172.19.14.31`, esto nos muestra los recursos SMB/CIFS de un equipo.
 
 ![](./images/51.png)
 
-* Ahora crearemos en local la carpeta `/mnt/remotoXX/castillo`.
+* Ahora crearemos en local la carpeta `/mnt/remoto14/castillo`.
 * **MONTAJE MANUAL**: Con el usuario root, usamos el siguiente comando para montar un recurso compartido de Samba Server, como si fuera una carpeta más de nuestro sistema:
-`mount -t cifs //172.AA.XX.55/castillo /mnt/remotoXX/castillo -o username=soldado1`
+`mount -t cifs //172.19.14.31/castillo /mnt/remoto14/castillo -o username=soldado1`
 
-> En versiones anteriores de GNU/Linux se usaba el comando
-
-`smbmount //smb-serverXX/public /mnt/remotoXX/public/ -o -username=smbguest`.
+![](./images/52.png)
 
 * `df -hT`, para comprobar que el recurso ha sido montado.
 
-![samba-linux-mount-cifs](./images/samba-linux-mount-cifs.png)
+![](./images/53.png)
 
-> * Si montamos la carpeta de `castillo`, lo que escribamos en `/mnt/remotoXX/castillo`
-debe aparecer en la máquina del servidor Samba. ¡Comprobarlo!
+> * Si montamos la carpeta de `castillo`, lo que escribamos en `/mnt/remoto14/castillo`
+debe aparecer en la máquina del servidor Samba. ¡Comprobarlo! \
+![](./images/54.png)
 > * Para desmontar el recurso remoto usamos el comando `umount`.
 
 * Capturar imagen de los siguientes comandos para comprobar los resultados:
     * `smbstatus`, desde el servidor Samba.
-    * `lsof -i`, desde el servidor Samba.
+
+![](./images/55.png)
+
+  * `lsof -i`, desde el servidor Samba.
+
+![](./images/56.png)
+
 
 ## 3.3 Montaje automático
 
-* Hacer una instantánea de la MV antes de seguir. Por seguridad.
-* Capturar imágenes del proceso.
-* Reiniciar la MV.
+* Haremos una instantánea de la MV antes de seguir por seguridad.
+* Reiniciaremos la MV.
 * `df -hT`. Los recursos ya NO están montados. El montaje anterior fue temporal.
+![](./images/57.png)
 
-> Antes accedimos a los recursos remotos, realizando un montaje de forma manual (comandos mount/umount). Si reiniciamos el equipo cliente, podremos ver que los montajes realizados de forma manual ya no están. Si queremos volver a acceder a los recursos remotos debemos repetir el proceso de  montaje manual, a no ser que hagamos una configuración de  montaje permanente o automática.
+* Para configurar acciones de montajes automáticos cada vez que se inicie el equipo, debemos configurar el fichero `/etc/fstab`. Incluiremos la línea siguiente:
+    * `//172.19.14.31/public /mnt/remoto14/public cifs username=soldado1,password=soldado1 0 0`
 
-* Para configurar acciones de montaje automáticos cada vez que se inicie el equipo,
-debemos configurar el fichero `/etc/fstab`. Veamos un ejemplo:
-    * `//smb-serverXX/public /mnt/remotoXX/public cifs username=soldado1,password=clave 0 0`
-* Reiniciar el equipo y comprobar que se realiza el montaje automático al inicio.
-* Incluir contenido del fichero `/etc/fstab` en la entrega.
+![](./images/58.png)
+
+* Reiniciaremos el equipo y comprobaremos que se realiza el montaje automático al inicio.
+
+![](./images/59.png)
+
 
 ---
-
-# 4. Preguntas para resolver
-
-Servicio y programas:
-
-* ¿Por qué tenemos dos servicios (smb y nmb) para Samba?
-
-Usuarios:
-
-* ¿Las claves de los usuarios en GNU/Linux deben ser las mismas que las que usa Samba?
-* ¿Puedo definir un usuario en Samba llamado soldado3, y que no exista como usuario del sistema?
-* ¿Cómo podemos hacer que los usuarios soldado1 y soldado2 no puedan acceder al sistema pero sí al samba? (Consultar `/etc/passwd`)
-
-Recursos compartidos:
-
-* Añadir el recurso `[homes]` al fichero `smb.conf` según los apuntes. ¿Qué efecto tiene?
-
-> Para REVISAR
-> * ¿Cómo pueden los clientes acceder al CDROM del servidor usando Samba?
->    * /dev/cdrom ¿Dónde apunta? ¿Qué permisos tiene?
->    * /dev/sr0 ¿Que permisos tiene?
