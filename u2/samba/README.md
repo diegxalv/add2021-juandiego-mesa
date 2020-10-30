@@ -76,7 +76,7 @@ Crearemos la carpeta base para los recursos de red de Samba, y le asignaremos lo
 * `Yast -> Samba Server`
 ![](./images/14.png)
     * Workgroup: `curso2021`
-    * Sin controlador de dominio.
+    * Sin controlador de dominio. \
 ![](./images/15.png)
 * En la pestaña de `Inicio` definimos
     * Iniciar el servicio durante el arranque de la máquina.
