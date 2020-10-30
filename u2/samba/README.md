@@ -160,7 +160,7 @@ Después de crear los usuarios en el sistema, hay que añadirlos a Samba.
 
 Ahora que hemos terminado con el servidor, hay que recargar los ficheros de configuración del servicio. Esto es, leer los cambios de configuración.
 
-Podemos hacerlo por `Yast -> Servicios`, o usar los comandos.
+Podemos hacerlo por `YaST -> Servicios`, o usar los comandos siguientes:
 * Servicio smb `systemctl restart smb`
 * Servicio nmb `systemctl restart nmb`
 
@@ -174,21 +174,17 @@ Podemos hacerlo por `Yast -> Servicios`, o usar los comandos.
 | systemctl reload  SERVICE-NAME | Volver a releer la configuración |
 | systemctl status  SERVICE-NAME | Ver estado |
 
-* Capturar imagen de los siguientes comandos de comprobación:
-
-`sudo lsof -i`, comprobaremos que el servicio SMB/CIF está a la escucha. \
+* `sudo lsof -i`, comprobaremos que el servicio SMB/CIF está a la escucha. \
 ![](./images/28.png)
 
 ---
 
 # 2. Windows
 
-* Configurar el cliente Windows.
-* Usar nombre y la IP que hemos establecido al comienzo.
-* Configurar el fichero `...\etc\hosts` de Windows.
+* Configuraremos el cliente Windows.
+* Usaremos el nombre y la IP que hemos establecido al comienzo.
+* Configuraremos el fichero `...\etc\hosts` de Windows.
 * En los clientes Windows el software necesario viene preinstalado.
-
----
 
 ## 2.1 Cliente Windows GUI
 
@@ -202,30 +198,28 @@ Desde un cliente Windows vamos a acceder a los recursos compartidos del servidor
 
 ![](./images/31.png)  
 
-* Acceder al recurso compartido con el usuario `soldado`
+* Acceder al recurso compartido con el usuario `soldado`:
     * `net use` para ver las conexiones abiertas.
     * `net use * /d /y`, para borrar todas las conexión SMB/CIFS que se han realizado.
 
 ![](./images/32.png)
 
 ![](./images/33.png)    
-* Acceder al recurso compartido con el usuario `pirata`:
-
+* Accederemos al recurso compartido con el usuario `pirata`:
+    * `net use` para ver las conexiones abiertas.
+    * `net use * /d /y`, para borrar todas las conexión SMB/CIFS que se han realizado.\
 ![](./images/34.png)
 
-* Ir al servidor Samba.
-* Capturar imagen de los siguientes comandos para comprobar los resultados:
-    * `smbstatus`, desde el servidor Samba.
-
+* Iremos al servidor Samba, y ejecutaremos los siguiente comandos:
+    * `smbstatus`, desde el servidor Samba. \
 ![](./images/35.png)    
-    * `lsof -i`, desde el servidor Samba.
+    * `lsof -i`, desde el servidor Samba. \
 ![](./images/36.png)    
 
----
 
 ## 2.2 Cliente Windows comandos
 
-* Abrir una shell de windows.
+* Abriremos una shell de windows.
 * `net use /?`, para consultar la ayuda del comando.
 ![](./images/37.png)    
 
@@ -233,16 +227,13 @@ Desde un cliente Windows vamos a acceder a los recursos compartidos del servidor
 
 ![](./images/38.png)    
 * Si hubiera alguna conexión abierta la cerramos.
-    * `net use * /d /y`, para cerrar las conexiones SMB.
-
+    * `net use * /d /y`, para cerrar las conexiones SMB. \
 ![](./images/39.png)    
-    * `net use` ahora vemos que NO hay conexiones establecidas.
-
+    * `net use` ahora vemos que NO hay conexiones establecidas. \
 ![](./images/38.png)
 
-Capturar imagen de los comandos siguientes:
-* `net view \\172.19.14.31`, para ver los recursos de esta máquina.
 
+* `net view \\172.19.14.31`, para ver los recursos de esta máquina. \
 ![](./images/40.png)    
 
 * `net use S: \\172.19.14.31\barco /USER:pirata1 /p:yes` crear una conexión con el recurso compartido `barco` y lo monta en la unidad S.
