@@ -11,7 +11,7 @@
 
 ## 1.2 Usuarios locales
 
-Vamos a GNU/Linux, y creamos los siguientes grupos y usuarios:
+Vamos a GNU/Linux, y crearemos los siguientes grupos y usuarios:
 
 * Crearemos los grupos `piratas`, `soldados` y `sambausers`.
 
@@ -22,31 +22,30 @@ Vamos a GNU/Linux, y creamos los siguientes grupos y usuarios:
 
 ![](./images/4.png)
 
-> Podemos hacer estos cambios por entorno gráfico usando Yast, o por comandos editando el fichero /etc/passwd.
+> Podemos hacer estos cambios por entorno gráfico usando YaST, o por comandos editando el fichero /etc/passwd.
 
-* Dentro del grupo piratas incluir a los usuarios `pirata1`, `pirata2` y `supersamba`.
+* Dentro del grupo piratas incluiremos a los usuarios `pirata1`, `pirata2` y `supersamba`.
 
 ![](./images/5.png)
 ![](./images/7.png)
 
 
-* Dentro del grupo soldados incluir a los usuarios `soldado1`, `soldado2` y `supersamba`.
+* Dentro del grupo soldados incluiremos a los usuarios `soldado1`, `soldado2` y `supersamba`.
 
 ![](./images/6.png)
 ![](./images/8.png)
 
 
-* Dentro del grupo `sambausers`, poner a todos los usuarios `soldados`, `piratas`, `supersamba` y a `sambaguest`.
+* Dentro del grupo `sambausers`, pondremos a todos los usuarios `soldados`, `piratas`, `supersamba` y a `sambaguest`.
 
 ![](./images/9.png)
 
 
 ## 1.3 Crear las carpetas para los futuros recursos compartidos
 
-Creamos la carpeta base para los recursos de red de Samba:
+Crearemos la carpeta base para los recursos de red de Samba, y le asignaremos los permisos 755.
 * `mkdir /srv/samba14`
 * `chmod 755 /srv/samba14`
-
 
 * Vamos a crear las carpetas de los recursos compartidos con los permisos siguientes:
 
@@ -66,19 +65,18 @@ Creamos la carpeta base para los recursos de red de Samba:
 
 ## 1.4 Configurar el servidor Samba
 
-* Vamos a hacer una copia de seguridad del fichero de configuración existente
+* Vamos a hacer una copia de seguridad del fichero de configuración existente con el siguiente comando: \
 `cp /etc/samba/smb.conf /etc/samba/smb.conf.bak`.
 
 ![](./images/13.png)
 
 
-> Para instalar y configurar el servicio Samba, podemos usar comandos o el entorno gráfico. Como estamos en OpenSUSE vamos a usar Yast.
+> Para instalar y configurar el servicio Samba, podemos usar comandos o el entorno gráfico. Como estamos en OpenSUSE vamos a usar YaST.
 
 * `Yast -> Samba Server`
 ![](./images/14.png)
     * Workgroup: `curso2021`
     * Sin controlador de dominio.
-
 ![](./images/15.png)
 * En la pestaña de `Inicio` definimos
     * Iniciar el servicio durante el arranque de la máquina.
