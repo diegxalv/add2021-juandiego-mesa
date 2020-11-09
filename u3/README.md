@@ -55,7 +55,7 @@ Vamos a la MV del servidor.
 * Elegiremos la impresora PDFCreator. \
 ![](./images/9.png)
     * `Botón derecho -> Propiedades -> Compartir`
-    * Como nombre del recurso compartido utilizaremos `PDFdiego14`.
+    * Como nombre del recurso compartido utilizaremos `PDFdiego14`. \
     ![](./images/10.png)
 
 ## 2.2 Comprobar desde el cliente
