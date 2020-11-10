@@ -1,8 +1,8 @@
 # Servidor de Impresión en Windows
 
 Necesitaremos 2 MV:
-* MV1: Windows Server
-* MV2: Windows 7/10 cliente
+* MV1: Windows Server 2016
+* MV2: Windows 7 o 10 que harán de cliente
 
 ---
 
@@ -14,7 +14,7 @@ Necesitaremos 2 MV:
 ![](./images/1.png)
 
   ![](./images/2.png)
-> Instalar también rol/función de cliente de impresión por Internet.
+> Instalaremos también el rol/función de cliente de impresión por Internet.
 ![](./images/3.png)
 
 ## 1.2 Instalar impresora PDF
@@ -25,10 +25,10 @@ En nuestro caso, vamos a instalar un programa que simule una impresora de PDF.
 
 PDFCreator es una utilidad completamente gratuita con la que podrás crear archivos PDF desde cualquier aplicación, desde el Bloc de notas hasta Word, Excel, etc. Este programa funciona simulando ser una impresora, de esta forma, instalando PDFCreator todas tus aplicaciones con opción para imprimir te permitirán crear archivos PDF en cuestión de segundos.
 
-* Descargar PDFCreator (URL recomendada `www.pdfforge.org/pdfcreator/download`) y lo instalaremos. \
+* Descargaremos PDFCreator desde la siguiente URL recomendada ()`www.pdfforge.org/pdfcreator/download`) y lo instalaremos. \
 ![](./images/4.png)
 
-* En PDFCreator, configurar en `perfiles -> Guardar -> Automático`. Ahí establecemos la carpeta destino. \
+* En PDFCreator, configuraremos en `perfiles -> Guardar -> Automático`, y ahí establecemos la carpeta destino. \
 ![](./images/5.png)
 
 > NOTA: PDFCreator puede requerir NET FrameWork v4.
@@ -40,7 +40,7 @@ Para crear un archivo PDF no hará falta que cambies la aplicación que estés u
 
 Puedes probar la nueva impresora abriendo el Bloc de notas y creando un fichero luego selecciona imprimir. Cuando finalice el proceso se abrirá un fichero PDF con el resultado de la impresión.
 
-* Probar la impresora remota imprimiendo documento `imprimir14s-local`. \
+* Probaremos la impresora remota imprimiendo un documento llamado `imprimir14s-local`. \
 ![](./images/7.png)
 
 ![](./images/8.png)
@@ -89,7 +89,7 @@ Realizaremos una configuración para habilitar el acceso web a las impresoras de
 
 Vamos a la MV cliente:
 * Abrimos un navegador Web.
-* Ponemos URL `http://<ip-del-servidor>/printers`
+* Ponemos la siguiente URL `http://<ip-del-servidor>/printers`
 (o `http://<nombre-del-servidor>/printers`) para que aparezca en nuestro navegador un entorno que permite gestionar las impresoras de dicho equipo, previa autenticación como uno de los usuarios del habilitados para dicho fin (por ejemplo el "Administrador"). \
 ![](./images/16.png)
 * Pincha en la opción propiedades y captura lo que se ve. \
@@ -106,22 +106,23 @@ Vamos a la MV cliente:
 
 ## 3.3 Comprobar desde el navegador
 
-> * Comprobaremos que la versión Free tiene limitaciones. \
+> * **Comprobaremos que la versión Free tiene limitaciones.** \
+Si accedemos al apartado de perfiles, vemos que hay una limitación que requiere comprar la versión comercial. \
   ![](./images/26.png)
 
 
 Vamos a realizar seguidamente una prueba sencilla en tu impresora de red:
-* Accede a la configuración de la impresora a través del navegador.
+* Accederemos a la configuración de la impresora a través del navegador.
     * Ponemos en `pausa` los trabajos de impresión de la impresora. \
     ![](./images/22.png)
 * Vamos a la MV cliente.
-* Probaremos la impresora remota imprimiendo el documento `imprimir14w-web`. \
-    * Comprobar que al estar la impresora en pausa, el trabajo aparece en cola de impresión. \
+* Probaremos la impresora remota imprimiendo el documento `imprimir14w-web`.
+    * Comprobamos que al estar la impresora en pausa, el trabajo aparece en cola de impresión. \
     ![](./images/23.png)
-* Finalmente pulsa en reanudar el trabajo para que tu documento se convierta a PDF. \
+* Finalmente pulsamos en reanudar el trabajo para que el documento se convierta a PDF. \
     ![](./images/24.png)
-* Si tenemos problemas para que aparezca el PDF en el servidor, iniciar el
-programa PDFCreator y esperar un poco. \
+* Si tenemos problemas para que aparezca el PDF en el servidor, iniciaremos el
+programa PDFCreator y esperaremos un poco. \
     ![](./images/25.png)
 
 ---
