@@ -1,25 +1,5 @@
 # Servicio de Directorio con comandos
 
-## Introducción
-
-Hay varias herramientas que implementan el servidor de directorios LDAP (389-DS, OpenLDAP, Active Directory, etc).
-
-Según parece [Red Hat y Suse retiran su apoyo a OpenLDAP2](https://www.ostechnix.com/redhat-and-suse-announced-to-withdraw-support-for-openldap/), por este motivo, hemos decido a partir de noviembre de 2018 cambiar OpenLDAP2 por 389-DS.
-
-En esta guía vamos a instalar y configurar del servidor LDAP con 389-DS.
-
-## Entrega
-
-Ejemplo de rúbrica:
-
-| Sección | Muy bien (2) | Regular (1) | Poco adecuado (0) |
-| ------- | ------------ | ----------- | ----------------- |
-| (2.3) Comprobar contenido del DS LDAP | | | |
-| (3.3) Comprobar nuevo usuario | | | |
-| (4.3) Comprobar los usuarios creados | | | .|
-
----
-
 ## 1. Nombre de equipo FQDN
 
 * Vamos a usar una MV OpenSUSE para montar nuestro servidor LDAP.
@@ -28,7 +8,7 @@ Ejemplo de rúbrica:
     * Revisaremos `/etc/hosts`
 
 ```
-127.0.0.2   server14.curso1920   server14
+127.0.0.2   server14g.curso2021   server14g
 ```
 
 * Comprobaremos la salida de: `hostname -a`, `hostname -d` y `hostname -f`.
