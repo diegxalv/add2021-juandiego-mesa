@@ -143,7 +143,7 @@ gecos: Mazinger Z
 
 Estamos usando la clase `posixAccount`, para almacenar usuarios dentro de un directorio LDAP. Dicha clase posee el atributo `uid`.
 Por tanto, para listar los usuarios de un directorio, podemos filtrar por `"(uid=*)"`.
-* `ldapsearch -W -D "cn=Directory Manager" -b "dc=ldapXX,dc=curso1920" "(uid=*)"`, para comprobar si se ha creado el usuario en el LDAP.
+* `ldapsearch -W -D "cn=Directory Manager" -b "dc=ldapXX,dc=curso1920" "(uid=*)"`, para comprobar si se ha creado el usuario en el LDAP. \
 ![](./images/16.png)
 
 
@@ -155,7 +155,7 @@ Por tanto, para listar los usuarios de un directorio, podemos filtrar por `"(uid
 > dn: uid=mazinger,ou=People,dc=ldap14,dc=curso1920
 > changetype: delete
 > ```
-![](./images/26.png)
+>![](./images/26.png)
 >
 > * Ejecutamos el siguiente comando para eliminar un usuario del árbol LDAP: `ldapmodify -x -D "cn=Directory Manager" -W -f mazinger-delete.ldif` \
 ![](./images/27.png)
