@@ -300,7 +300,7 @@ Tenemos que conceder permisos al usuario `vagrant` para que pueda configurar la 
 
 > Hay que comprobar que no existe una linea indicando requiretty, y si existe la comentamos.
 
-    ![](./images/28.png)
+![](./images/28.png)
 
 **Añadir las VirtualBox Guest Additions**
 
