@@ -15,21 +15,21 @@ Docker es una tecnología contenedor de aplicaciones construida sobre LXC.
 Ejecutar como superusuario:
 * `zypper in docker`, instalar docker en OpenSUSE (`apt install docker` en Debian/Ubuntu).
 
-    ![](./images/1.png)
+    ![](./images/1.PNG)
 
 * `systemctl start docker`, iniciar el servicio. NOTA: El comando `docker daemon` hace el mismo efecto.
 * `systemctl enable docker`, si queremos que el servicio de inicie automáticamente al encender la máquina.
 
-    ![](./images/2.png)
+    ![](./images/2.PNG)
 
 * **IMPORTANTE**: Incluiremos a nuestro usuario (diego) como miembro del grupo `docker`. Solamente los usuarios dentro del grupo `docker` tendrán permiso para usarlo.
 
-    ![](./images/3.png)
+    ![](./images/3.PNG)
 
 Iniciaremos sesión como usuario normal.
 * `docker version`, comprobamos que se muestra la información de las versiones cliente y servidor.
 
-    ![](./images/4.png)
+    ![](./images/4.PNG)
 
 * **OJO**: A partir de ahora todo lo haremos con nuestro usuario, sin usar `sudo`.
 
@@ -39,7 +39,7 @@ Si queremos que nuestro contenedor tenga acceso a la red exterior, debemos activ
 
 * `cat /proc/sys/net/ipv4/ip_forward` para consultar el estado de IP_FORWARD (desactivado = 0, activo = 1).
 
-![](./images/5.png)
+![](./images/5.PNG)
 
 En caso de estar a 0, para activarlo podemos hacerlo de diversas formas:
 * Poner el valor 1 en el fichero de texto indicado.
@@ -66,14 +66,14 @@ En caso de estar a 0, para activarlo podemos hacerlo de diversas formas:
     * Crea un contenedor y
     * ejecuta la aplicación que hay dentro.
 
-    ![](./images/6.png)
+    ![](./images/6.PNG)
 
 * `docker images`, ahora vemos la nueva imagen "hello-world" descargada en nuestro equipo local.
 * `docker ps -a`, vemos que hay un contenedor en estado 'Exited'.
 * `docker stop IDContainer`, parar el conteneder.
 * `docker rm IDContainer`, eliminar el contenedor.
 
-    ![](./images/7.png)
+    ![](./images/7.PNG)
 
 
 ## 1.4 Sólo para LEER
@@ -124,17 +124,17 @@ y dentro instalaremos Nginx.
 **Descargar una imagen**
 * `docker search debian`, buscamos en los repositorios de Docker Hub contenedores con la etiqueta `debian`.
 
-    ![](./images/8.png)
+    ![](./images/8.PNG)
 
 * `docker pull debian`, descargamos una imagen en local.
 * `docker images`, comprobamos.
 
-    ![](./images/9.png)
+    ![](./images/9.PNG)
 
 **Crear un contenedor**: Vamos a crear un contenedor con nombre `app1debian` a partir de la imagen `debian`, y ejecutaremos el programa `/bin/bash` dentro del contendor:
 * `docker run --name=app1debian -i -t debian /bin/bash`
 
-    ![](./images/10.png)
+    ![](./images/10.PNG)
 
 
 ## 2.2 Personalizar el contenedor
@@ -150,11 +150,11 @@ root@IDContenedor:/# apt-get install -y nginx # Instalamos nginx en el contenedo
 root@IDContenedor:/# apt-get install -y vim   # Instalamos editor vi en el contenedor
 ```
 
-![](./images/11.png)
+![](./images/11.PNG)
 
-![](./images/12.png)
+![](./images/12.PNG)
 
-![](./images/13.png)
+![](./images/13.PNG)
 
 **Crear un fichero HTML** `holamundo1.html`.
 
@@ -162,7 +162,7 @@ root@IDContenedor:/# apt-get install -y vim   # Instalamos editor vi en el conte
 root@IDContenedor:/# echo "<p>Hola Diego</p>" > /var/www/html/holamundo1.html
 ```
 
-![](./images/14.png)
+![](./images/14.PNG)
 
 **Crear un script** `/root/server.sh` con el siguiente contenido:
 
@@ -177,12 +177,12 @@ while(true) do
 done
 ```
 
-![](./images/15.png)
+![](./images/15.PNG)
 
 Recordatorio:
 * Hay que poner permisos de ejecución al script para que se pueda ejecutar.
 
-    ![](./images/18.png)
+    ![](./images/18.PNG)
 
 * La primera línea de un script, siempre debe comenzar por `#!/`, sin espacios.
 * Este script inicia el programa/servicio y entra en un bucle, para mantener el contenedor activo y que no se cierre al terminar la aplicación.
@@ -202,7 +202,7 @@ Ya tenemos nuestro contenedor auto-suficiente de Nginx, ahora debemos vamos a cr
 * Ahora podemos parar el contenedor, `docker stop app1debian` y
 * Eliminar el contenedor, `docker rm app1debian`.
 
-    ![](./images/17.png)
+    ![](./images/17.PNG)
 
 
 # 3. Crear contenedor a partir de nuestra imagen
@@ -212,7 +212,7 @@ Ya tenemos nuestro contenedor auto-suficiente de Nginx, ahora debemos vamos a cr
 Ya tenemos una imagen "diego/nginx" con Nginx instalado.
 * `docker run --name=app2nginx1 -p 80 -t diego/nginx1 /root/server.sh`, iniciar el contenedor a partir de la imagen anterior.
 
-    ![](./images/19.png)
+    ![](./images/19.PNG)
 
 > El argumento `-p 80` le indica a Docker que debe mapear el puerto especificado del contenedor, en nuestro caso el puerto 80 es el puerto por defecto sobre el cual se levanta Nginx.
 
@@ -221,19 +221,19 @@ Ya tenemos una imagen "diego/nginx" con Nginx instalado.
 * Abrimos una nueva terminal.
 * `docker ps`, nos muestra los contenedores en ejecución. Podemos apreciar que la última columna nos indica que el puerto 80 del contenedor está redireccionado a un puerto local `0.0.0.0.:PORT -> 80/tcp`.
 
-    ![](./images/20.png)
+    ![](./images/20.PNG)
 
 * Abrir navegador web y poner URL `0.0.0.0.:PORT`. De esta forma nos conectaremos con el servidor Nginx que se está ejecutando dentro del contenedor.
 
-    ![](./images/21.png)
+    ![](./images/21.PNG)
 
 * Comprobar el acceso a `holamundo1.html`.
 
-    ![](./images/22.png)
+    ![](./images/22.PNG)
 
 * Paramos el contenedor `app2nginx1` y lo eliminamos.
 
-    ![](./images/23.png)
+    ![](./images/23.PNG)
 
 Como ya tenemos una imagen docker con Nginx (Servidor Web), podremos crear nuevos contenedores cuando lo necesitemos.
 
@@ -245,7 +245,7 @@ Como ya tenemos una imagen docker con Nginx (Servidor Web), podremos crear nuevo
 **Exportar** imagen Docker a fichero tar:
 * `docker save -o diego14docker.tar diego/nginx1`, guardamos la imagen "diego/nginx1" en un fichero tar.
 
-    ![](./images/24.png)
+    ![](./images/24.PNG)
 
 Intercambiaremos nuestra imagen exportada con la de un compañero de clase.
 
@@ -255,15 +255,15 @@ Intercambiaremos nuestra imagen exportada con la de un compañero de clase.
 * `docker load -i diego14docker.tar`, cargamos la imagen docker a partir del fichero tar. Cuando se importa una imagen se muestra en pantalla las capas que tiene. Las capas las veremos en un momento.
 * `docker images`, comprobamos que la nueva imagen está disponible.
 
-    ![](./images/25.png)
+    ![](./images/25.PNG)
 
 * Probar a crear un contenedor (`app3alumno`), a partir de la nueva imagen.
 
-    ![](./images/26.png)
+    ![](./images/26.PNG)
 
-    ![](./images/27.png)
+    ![](./images/27.PNG)
 
-    ![](./images/28.png)
+    ![](./images/28.PNG)
 
 
 ## 3.4 Capas 
@@ -288,7 +288,7 @@ usando un fichero de configuración. Esto es, vamos a crear un contenedor a part
     * Autor: Juan Diego
     * Fecha: 15/01/2021
 
-    ![](./images/29.png)
+    ![](./images/29.PNG)
 
 * Crear el fichero `Dockerfile` con el siguiente contenido:
 
@@ -309,7 +309,7 @@ EXPOSE 80
 CMD ["/usr/sbin/nginx", "-g", "daemon off;"]
 ```
 
-![](./images/30.png)
+![](./images/30.PNG)
 
 
 ## 4.2 Crear imagen a partir del `Dockerfile`
@@ -319,11 +319,11 @@ El fichero Dockerfile contiene toda la información necesaria para construir el 
 * `cd docker14a`, entramos al directorio con el Dockerfile.
 * `docker build -t diego/nginx2 .`, construye una nueva imagen a partir del Dockerfile. OJO: el punto final es necesario.
 
-    ![](./images/31.png)
+    ![](./images/31.PNG)
 
 * `docker images`, ahora debe aparecer nuestra nueva imagen.
 
-    ![](./images/32.png)
+    ![](./images/32.PNG)
 
 
 ## 4.3 Crear contenedor y comprobar
@@ -334,21 +334,21 @@ A continuación vamos a crear un contenedor con el nombre `app4nginx2`, a partir
 docker run --name=app4nginx2 -p 8082:80 -t diego/nginx2
 ```
 
-![](./images/33.png)
+![](./images/33.PNG)
 
 Desde otra terminal:
 * `docker ps`, para comprobar que el contenedor está en ejecución y en escucha por el puerto deseado.
 
-    ![](./images/34.png)
+    ![](./images/34.PNG)
 
 * Comprobar en el navegador:
     * URL `http://localhost:PORTNUMBER`
 
-    ![](./images/35.png)
+    ![](./images/35.PNG)
 
     * URL `http://localhost:PORTNUMBER/holamundo2.html`
 
-    ![](./images/36.png)
+    ![](./images/36.PNG)
 
 Ahora que sabemos usar los ficheros Dockerfile, nos damos cuenta que es más sencillo usar estos ficheros para intercambiar con nuestros compañeros que las herramientas de exportar/importar que usamos anteriormente.
 
@@ -366,7 +366,7 @@ El ejemplo anterior donde creábamos una imagen Docker con Nginx se puede simpli
     * Autor: Juan Diego
     * Fecha: 15/01/2021
 
-    ![](./images/37.png)
+    ![](./images/37.PNG)
 
 * Crea el siguiente `Dockerfile`
 
@@ -377,20 +377,20 @@ COPY holamundo3.html /usr/share/nginx/html
 RUN chmod 666 /usr/share/nginx/html/holamundo3.html
 ```
 
-![](./images/38.png)
+![](./images/38.PNG)
 
 * Poner el el directorio `docker14b` los ficheros que se requieran para construir el contenedor.
 * `docker build -t  diego/nginx3 .`, crear la imagen.
 
-    ![](./images/39.png)
+    ![](./images/39.PNG)
 
 * `docker run --name=app5nginx3 -d -p 8083:80 diego/nginx3`, crearemos el contenedor.
 
-    ![](./images/40.png)
+    ![](./images/40.PNG)
 
 * Comprobaremos el acceso a "holamundo3.html".
 
-    ![](./images/41.png)
+    ![](./images/41.PNG)
 
 
 # 5. Docker Hub
@@ -406,7 +406,7 @@ Proyecto docker14c
 Fecha actual 15/01/2021
 ```
 
-    ![](./images/42.png)
+    ![](./images/42.PNG)
 
 > NOTA: Usaremos la imagen base `busybox` y la instrucción RUN o un script para mostrar mensajes por pantalla.
 
