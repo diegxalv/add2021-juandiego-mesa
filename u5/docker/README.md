@@ -266,7 +266,7 @@ Intercambiaremos nuestra imagen exportada con la de un compañero de clase.
     ![](./images/28.PNG)
 
 
-## 3.4 Capas 
+## 3.4 Capas
 
 **Teoría sobre las capas**. Las imágenes de docker están creadas a partir de capas que van definidas en el fichero Dockerfile. Una de las ventajas de este sistema es que esas capas son cacheadas y se pueden compartir entre distintas imágenes, esto es que si por ejemplo la creación de nuestra imagen consta de 10 capas, y modificamos una de esas capas, a la hora de volver a construir la imagen solo se debe ejecutar esta nueva capa, el resto permanecen igual.
 
@@ -395,7 +395,7 @@ RUN chmod 666 /usr/share/nginx/html/holamundo3.html
 
 # 5. Docker Hub
 
-Ahora vamos a crear un contenedor "hola mundo" y subirlo a Docker Hub.
+Ahora vamos a crear un contenedor "hola mundo" y lo subiremos a Docker Hub.
 
 * Crear carpeta `docker14c`. Entrar en la carpeta.
 * Crear fichero Dockerfile de modo que al ejecutar este comando `docker run diego/holamundo` se mostrará en pantalla el mensaje siguiente:
@@ -406,13 +406,39 @@ Proyecto docker14c
 Fecha actual 15/01/2021
 ```
 
-    ![](./images/42.PNG)
-
 > NOTA: Usaremos la imagen base `busybox` y la instrucción RUN o un script para mostrar mensajes por pantalla.
 
-* Registrarse en Docker Hub.
-* `docker login`, para abrir la conexión.
-* `docker push ...`, para subir la imagen a los repositorios de Docker.
+![](./images/46.PNG)
+
+* Descargaremos `busybox`. Para ello, vamos a hacer lo siguiente:
+    * `docker search busybox`, para buscar busybox.
+
+    ![](./images/43.PNG)
+
+    * `docker pull busybox`, para descargarlo.
+
+    ![](./images/44.PNG)
+
+    * Listaremos las imágenes de docker que tenemos con `docker images`.
+
+    ![](./images/45.PNG)
+
+Por último, vamos a proceder a construir la imagen y a ejecutarla. Para ello, introduciremos los siguientes comandos:
+
+* `docker build -t diego/holamundo .`, con esto construimos la imagen a partir del Dockerfile.
+
+![](./images/47.PNG)
+
+* `docker run diego/holamundo`, para ejecutar la imagen.
+
+![](./images/48.PNG)
+
+
+* Para finalizar el apartado, procederemos a registrarnos en Docker Hub.
+* `docker login -u USUARIO-DOCKER`, para abrir la conexión.
+* `docker tag diego/holamundo:latest USUARIO-DOCKER/holamundo:version1`, etiquetamos la imagen con "version1".
+* `docker push USUARIO-DOCKER/holamundo:version1`, para subir la imagen a los repositorios de Docker.
+
 
 # 6. Limpiar contenedores e imágenes
 
