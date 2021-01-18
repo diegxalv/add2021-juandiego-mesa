@@ -435,22 +435,42 @@ Por último, vamos a proceder a construir la imagen y a ejecutarla. Para ello, i
 
 
 * Para finalizar el apartado, procederemos a registrarnos en Docker Hub.
+
+![](./images/49.png)
+
 * `docker login -u USUARIO-DOCKER`, para abrir la conexión.
+
+![](./images/50.png)
+
 * `docker tag diego/holamundo:latest USUARIO-DOCKER/holamundo:version1`, etiquetamos la imagen con "version1".
+
+![](./images/51.png)
+
 * `docker push USUARIO-DOCKER/holamundo:version1`, para subir la imagen a los repositorios de Docker.
 
+![](./images/52.png)
 
 # 6. Limpiar contenedores e imágenes
 
 Cuando terminamos con los contenedores, y ya no lo necesitamos, es buena idea pararlos y/o destruirlos.
 
 * `docker ps -a`, identificar todos los contenedores que tenemos.
+
+![](./images/53.png)
+
 * `docker stop ...`, parar todos los contenedores.
+
+![](./images/54.png)
+
 * `docker rm ...`, eliminar los contenedores.
+
+![](./images/55.png)
 
 Hacemos lo mismo con las imágenes. Como ya no las necesitamos las eliminamos:
 
 * `docker images`, identificar todas las imágenes.
 * `docker rmi ...`, eliminar las imágenes.
+
+![](./images/56.png)
 
 ---
