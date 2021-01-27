@@ -18,6 +18,8 @@ Hay varias herramientas conocidas del tipo gestor de infrastructura como Puppet,
 
 * Vamos a la MV1 y haremos `zypper install salt-master`, para instalar el software del Máster.
 
+    ![](./images/1.png)
+
 > ATENCIÓN: El fichero de configuración siguiente tiene formato YAML.
 >
 > 1. Los valores de clave(key) principal no tienen espacios por delante.
@@ -32,15 +34,14 @@ file_roots:
   base:
     - /srv/salt
 ```
+
+    ![](./images/2.png)
+
 * `systemctl enable salt-master.service`, activaremos el servicio en el arranque del sistema.
 * `systemctl start salt-master.service`, iniciaremos el servicio.
 * `salt-key -L`, para consultar Minions aceptados por nuestro Máster. Vemos que no hay ninguno todavía.
-```
-Accepted Keys:
-Denied Keys:
-Unaccepted Keys:
-Rejected Keys:
-```
+
+    ![](./images/3.png)
 
 ---
 # 3. Minion
@@ -50,22 +51,43 @@ Los Minions son los equipos que van a estar bajo el control del Máster.
 ## 3.1 Instalación y configuración
 
 * `zypper install salt-minion`, instalaremos el software del agente (minion).
+
+    ![](./images/4.png)
+
 * Modificar `/etc/salt/minion` para definiremos quien será nuestro Máster:
 ```
 master: 172.19.14.31
 ```
+
+    ![](./images/5.png)
+
 * `systemctl enable salt-minion.service`, activaremos Minion en el arranque del sistema.
 * `systemctl start salt-minion.service`, iniciaremos el servico del Minion.
+
+    ![](./images/6.png)
+
 * Comprobaremos que no tenemos instalado `apache2` en el Minion.
+
+    ![](./images/7.png)
+
 
 ## 3.2 Cortafuegos
 
-Hay que asegurarse de que el cortafuegos permite las conexiones al servicio Salt. Consultar URL [Opening the Firewall up for Salt](https://docs.saltstack.com/en/latest/topics/tutorials/firewall.html)
+Hay que asegurarse de que el cortafuegos permite las conexiones al servicio Salt.
 
 * Iremos a la MV1 Máster.
 * `firewall-cmd --get-active-zones`, consultaremos la zona de red. El resultado será public, dmz o algún otro. Sólo se debe aplicar a las zonas necesarias.
+
+    ![](./images/8.png)
+
 * `firewall-cmd --zone=public --add-port=4505-4506/tcp --permanent`, abrirem0os el puerto de forma permanente en la zona "public".
+
+    ![](./images/9.png)
+
 * `firewall-cmd reload`, reiniciar el firewall para que los cambios surtan efecto.
+
+    ![](./images/10.png)
+
 
 ## 3.3 Aceptación desde el Master
 
@@ -78,8 +100,16 @@ Unaccepted Keys:
 minion14g
 Rejected Keys:
 ```
+
+    ![](./images/11.png)
+
 * `salt-key -a minion14g`, para que el Máster acepte a dicho Minion.
+
+    ![](./images/12.png)
+
 * `salt-key -L`, comprobamos.
+
+    ![](./images/13.png)
 
 ## 3.4 Comprobamos conectividad
 
@@ -90,6 +120,9 @@ Desde el Máster comprobamos:
 minion14g:
     True
 ```
+
+    ![](./images/14.png)
+
 2. Versión de Salt instalada en los Minions
 ```
 # salt '*' test.version
@@ -99,13 +132,10 @@ minion14g:
 
 > El símbolo `'*'` representa a todos los minions aceptados. Se puede especificar un minion o conjunto de minios concretos.
 
+![](./images/15.png)
+
 ---
 # 4. Salt States
-
-> Enlaces de interés:
-> * [Learning SaltStack - top.sls (1 of 2)](https://www.youtube.com/watch?v=UOzmExyAXOM&t=8s)
-> * [Learning SaltStack - top.sls (2 of 2)](https://www.youtube.com/watch?v=1KblVBuHP2k)
-> * [Repositorio GitHub con estados de ejemplo](https://github.com/AkhterAli/saltstates/)
 
 ## 4.1 Preparar el directorio para los estados
 
@@ -113,6 +143,9 @@ Vamos a crear directorios para guardar lo estados de Salt. Los estados de Salt s
 
 Ir a la MV Máster:
 * Crear directorios `/srv/salt/base` y `/srv/salt/devel`.
+
+    ![](./images/16.png)
+
 * Crear archivo `/etc/salt/master.d/roots.conf` con el siguiente contenido:
 ```
 file_roots:
@@ -121,11 +154,17 @@ file_roots:
   devel:
     - /srv/salt/devel
 ```
+
+    ![](./images/17.png)
+
 * Reiniciar el servicio del Máster.
+
+    ![](./images/18.png)
 
 Hemos creado los directorios para:
 * base = para guardar nuestros estados.
 * devel = para desarrollo o para hacer pruebas.
+
 
 ## 4.2 Crear un nuevo estado
 
@@ -145,11 +184,14 @@ apache_service:
      - pkg: apache2
 ```
 
+![](./images/19.png)
+
 Entendamos las definiciones:
 * Nuestro nuevo estado se llama `apache` porque el directorio donde están las definiciones se llama `srv/salt/base/apache`.
 * La primera línea es un identificador (Por ejemplo: `install_apache` o `apache_service`), y es un texto que ponemos nosotros libremente, de forma que nos ayude a identificar lo que vamos a definir.
 * `pkg.installed`: Es una orden de salt que asegura que los paquetes estén instalados.
 * `service.running`: Es una orden salt que asegura de que los servicios estén iniciados o parados.
+
 
 ## 4.3 Asociar Minions a estados
 
@@ -161,13 +203,18 @@ base:
     - apache
 ```
 
+![](./images/20.png)
+
 ## 4.4 Comprobar: estados definidos
 
 * `salt '*' state.show_states`, consultar los estados que tenemos definidos para cada Minion:
+
 ```
 minion14g:
     - apache
 ```
+
+![](./images/21.png)
 
 ## 4.5 Aplicar el nuevo estado
 
