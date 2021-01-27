@@ -35,7 +35,7 @@ file_roots:
     - /srv/salt
 ```
 
-    ![](./images/2.png)
+![](./images/2.png)
 
 * `systemctl enable salt-master.service`, activaremos el servicio en el arranque del sistema.
 * `systemctl start salt-master.service`, iniciaremos el servicio.
@@ -59,7 +59,7 @@ Los Minions son los equipos que van a estar bajo el control del Máster.
 master: 172.19.14.31
 ```
 
-    ![](./images/5.png)
+![](./images/5.png)
 
 * `systemctl enable salt-minion.service`, activaremos Minion en el arranque del sistema.
 * `systemctl start salt-minion.service`, iniciaremos el servico del Minion.
@@ -101,7 +101,7 @@ minion14g
 Rejected Keys:
 ```
 
-    ![](./images/11.png)
+![](./images/11.png)
 
 * `salt-key -a minion14g`, para que el Máster acepte a dicho Minion.
 
@@ -121,7 +121,7 @@ minion14g:
     True
 ```
 
-    ![](./images/14.png)
+![](./images/14.png)
 
 2. Versión de Salt instalada en los Minions
 ```
@@ -155,7 +155,7 @@ file_roots:
     - /srv/salt/devel
 ```
 
-    ![](./images/17.png)
+![](./images/17.png)
 
 * Reiniciar el servicio del Máster.
 
@@ -221,8 +221,18 @@ minion14g:
 Ir al Master:
 * Consultar los estados en detalle y verificar que no hay errores en las definiciones.
     * `salt '*' state.show_lowstate`
+
+    ![](./images/22.png)
+
     * `salt '*' state.show_highstate`,
+
+    ![](./images/23.png)
+
 * `salt '*' state.apply apache`, para aplicar el nuevo estado en todos los minions. OJO: Esta acción puede tardar un tiempo.
+
+    ![](./images/24.png)
+    ![](./images/25.png)
+
 
 ```
 minion14g:
@@ -267,22 +277,42 @@ Vamos a crear un estado llamado `users` que nos servirá para crear un grupo y u
 * Crear fichero `/srv/salt/base/users/init.sls` con las definiones para crear los siguiente:
     * Grupo `mazingerz`
     * Usuarios `koji14`, `drinfierno14` dentro de dicho grupo.
+
+    ![](./images/26.png)
+
 * Aplicar el estado.
 
-## 5.2 Crear estado "files"
-> Enlace de inteŕes:
+    ![](./images/27.png)
+    ![](./images/28.png)
+
+## 5.2 Crear estado "dirs"
+> Enlace de interés:
 >
 > * [Gestión de ficheros](https://docs.saltstack.com/en/getstarted/config/files.html)
 
-* Crear estado `files` para crear las carpetas `private` (700), `public` (755) y `group` (750) en el home del usuario `koji` (ver ejemplos en el ANEXO).
-* Crear el fichero `srv/salt/files/README.txt`. Escribir dentro el nombre del alumno y la fecha actual.
-* Incluir en el estado anterior la creación del fichero `README.txt` en el Minion, a partir de la descarga del mismo desde el servidor Salt Máster. Consultar enlace [Manage Files](https://docs.saltstack.com/en/getstarted/config/files.html)
-* Aplicar el estado `files`.
+* Crear estado `dirs` para crear las carpetas `private` (700), `public` (755) y `group` (750) en el home del usuario `koji` (ver ejemplos en el ANEXO).
 
-## 5.3 Ampliar estaod "apache"
+    ![](./images/30.png)
+
+* Aplicar el estado `dirs`.
+
+    ![](./images/31.png)
+
+## 5.3 Ampliar estado "apache"
 
 * Crear el fichero `srv/salt/files/holamundo.html`. Escribir dentro el nombre del alumno y la fecha actual.
-* Incluir en el estado "apache" la creación del fichero `/var/www/html/index.html` en el Minion. Dicho fichero se descargará desde el servidor Salt Máster.
+
+    ![](./images/32.png)
+
+* Incluir en el estado "apache" la creación del fichero `holamundo` en el Minion. Dicho fichero se descargará desde el servidor Salt Máster.
+
+```
+holamundo:
+  file.managed:
+    - name: /var/www/html/holamundo.html
+    - source: salt://holamundo.html
+```
+
 * Aplicar el estado.
 
 ---
