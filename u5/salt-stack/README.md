@@ -316,6 +316,10 @@ La solución aportada por la compañera para que funcione es copiar el fichero `
 
 ![](./images/35.PNG)
 
+Consultaremos `/srv/www/htdocs` y vemos como el fichero se copió:
+
+![](./images/36.PNG)
+
 ---
 # 6. Añadir Minion de otro SO
 
