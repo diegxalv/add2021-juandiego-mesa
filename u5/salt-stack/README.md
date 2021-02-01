@@ -300,20 +300,21 @@ Vamos a crear un estado llamado `users` que nos servirá para crear un grupo y u
 
 ## 5.3 Ampliar estado "apache"
 
-* Crear el fichero `srv/salt/files/holamundo.html`. Escribir dentro el nombre del alumno y la fecha actual.
+* Crearemos el fichero `srv/salt/files/holamundo.html`. Escribiremos dentro el nombre del alumno y la fecha actual.
 
     ![](./images/32.png)
 
 * Incluir en el estado "apache" la creación del fichero `holamundo` en el Minion. Dicho fichero se descargará desde el servidor Salt Máster.
 
-```
-holamundo:
-  file.managed:
-    - name: /var/www/html/holamundo.html
-    - source: salt://holamundo.html
-```
+El código a añadir es el siguiente:
 
-* Aplicar el estado.
+    ![](./images/33.PNG)
+
+La solución aportada por la compañera para que funcione es copiar el fichero `holamundo.html` a `/srv/salt/base/files`. Entonces al aplicar el estado, obtenemos que se copia satisfactoriamente.
+
+    ![](./images/34.PNG)
+
+    ![](./images/35.PNG)
 
 ---
 # 6. Añadir Minion de otro SO
