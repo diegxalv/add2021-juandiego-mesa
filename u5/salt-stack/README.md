@@ -308,13 +308,13 @@ Vamos a crear un estado llamado `users` que nos servirá para crear un grupo y u
 
 El código a añadir es el siguiente:
 
-    ![](./images/33.PNG)
+![](./images/33.PNG)
 
 La solución aportada por la compañera para que funcione es copiar el fichero `holamundo.html` a `/srv/salt/base/files`. Entonces al aplicar el estado, obtenemos que se copia satisfactoriamente.
 
-    ![](./images/34.PNG)
+![](./images/34.PNG)
 
-    ![](./images/35.PNG)
+![](./images/35.PNG)
 
 ---
 # 6. Añadir Minion de otro SO
