@@ -1,0 +1,77 @@
+#!/usr/bin/env ruby
+
+opcion = ARGV[0]
+
+def ayuda()
+  puts "
+Usage:
+        systemctml [OPTIONS] [FILENAME]
+Options:
+        --help, mostrar esta ayuda.
+        --version, mostrar información sobre el autor del script
+                   y fecha de creacion.
+        --status FILENAME, comprueba si puede instalar/desintalar.
+        --run FILENAME, instala/desinstala el software indicado.
+Description:
+        Este script se encarga de instalar/desinstalar
+        el software indicado en el fichero FILENAME.
+        Ejemplo de FILENAME:
+        tree:install
+        nmap:install
+        atomix:remove
+  "
+end
+
+def version()
+  puts "Autor del script: Juan Diego Mesa Alvarez"
+  puts "Fecha de creación: 12/02/2021"
+end
+
+if opcion.nil?
+  puts "Usa la opción --help para ver la ayuda."
+  exit (1)
+
+elsif opcion == "--help"
+  ayuda
+
+elsif opcion == "--version"
+  version
+
+elsif opcion == "--status"
+  a = `cat FILENAME`
+  b = a.split("\n")
+  b.each do |i|
+    c = i.split(":")
+    i = `zypper info #{c[0]} | grep Instalado | grep Sí | wc -l`.chop
+    if i == "1"
+      puts "El paquete #{c[0]} está instalado."
+    elsif i == "0"
+      puts "El paquete #{c[0]} no está instalado."
+    end
+  end
+
+elsif opcion == "--run"
+  user = `whoami`.chop
+  if user == "root"
+    a = `cat FILENAME`
+    b = a.split("\n")
+    b.each do |i|
+      c = i.split(":")
+      j = `zypper info #{c[0]} | grep Instalado | grep Sí | wc -l`.chop
+      if ((j == "1") and (c[1] == "remove"))
+        comm = `zypper remove -y #{c[0]}`
+        puts "El paquete #{c[0]} ha sido desinstalado."
+      elsif ((j == "1") and (c[1] == "install"))
+        puts "El paquete #{c[0]} ya está instalado."
+      elsif ((j == "0") and (c[1] == "remove"))
+        puts "El paquete #{c[0]} no está instalado."
+      elsif ((j == "0") and (c[1] == "install"))
+        comm = `zypper install -y #{c[0]}`
+        puts "El paquete #{c[0]} ha sido instalado."
+      end
+    end
+  elsif user != "root"
+    puts "Se requieren privilegios de administrador (root) para ejecutar este comando."
+    exit (1)
+  end
+end
